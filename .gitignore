@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.angular/
+out-tsc/
+content/build/
+
+# Environment and local settings
+.env
+.env.*
+!.env.example
+.claude/settings.local.json
+
+# Editors and OS
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+
+# Logs and test output
+*.log
+coverage/
+test-results/
+playwright-report/
