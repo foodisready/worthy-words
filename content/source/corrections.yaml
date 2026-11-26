@@ -1,0 +1,56 @@
+# Reviewed fixes to the base text (Wikisource revision 1955020), applied by
+# scripts/source/import-wikisource.ts. The base reading is kept as a variant.
+#
+# Only clear errors are fixed here: mistakes from converting simplified to
+# traditional characters, and typos that the second Wikisource revision and the
+# sense of the line both contradict. Real variant readings are not "fixed":
+# they stay in the base text with the other readings listed as variants.
+#
+# n is the line number in common-edition.yaml.
+
+- n: 80
+  text: 在家由父，出嫁從夫。
+  reason: 出家 ("leave home as a monk or nun") makes no sense here; the line is 出嫁 ("marry"), as in Wikisource 2614365 and the 三從 saying it quotes.
+
+- n: 181
+  text: 少壯不努力，老大徒傷悲。
+  reason: Quotes the Han ballad 《長歌行》, which ends 老大徒傷悲; 悲傷 is a common misquotation.
+
+- n: 197
+  text: 將相胸前堪走馬，公侯肚裏好撐船。
+  reason: 公候 is a typo for 公侯 ("dukes and marquises"), matching 將相 in the first half.
+
+- n: 236
+  text: 但有綠楊堪繫馬，處處有路透長安。
+  reason: 系 comes from converting simplified 系 back to traditional; tying a horse is 繫馬. 透長安 is kept as the base reading (also in a modern annotated copy).
+
+- n: 247
+  text: 誰人不愛子孫賢，誰人不愛千鍾粟。
+  reason: Simplified 钟 was converted to 鐘 ("bell"); 千鍾粟 ("a thousand measures of grain") uses 鍾.
+
+- n: 278
+  text: 屋漏更遭連夜雨，行船又遇打頭風。
+  reason: 連夜雨 ("rain night after night") is the reading of Wikisource 2614365, a modern annotated copy, and the saying as it is known; 連年 breaks the image.
+
+- n: 310
+  text: 萬事皆已定，浮生空自忙。
+  reason: 空白茫 is a garbled 空自忙 ("busy oneself in vain"), the reading of a modern annotated copy and, as 浮生空自忙, of Wikisource 2614365.
+
+- n: 248
+  text: 奈五行，不是這般題目。
+  reason: The base text joins the first half of the next line to the end of this one. Wikisource 2614365 and a modern annotated copy both read 誰人不愛千鍾粟，奈五行，不是這般題目。莫把真心空計較，兒孫自有兒孫福。
+
+# Lines missing from the base text, restored. Each is found in both
+# Wikisource 2614365 and a modern annotated copy, in the same position.
+
+- insert_after: 36
+  text: 古人不見今時月，今月曾經照古人。
+  reason: Restored; missing from Wikisource 1955020 but in Wikisource 2614365 and a modern annotated copy, after 近水樓臺先得月. Echoes Li Bai's 《把酒問月》.
+
+- insert_after: 36
+  text: 先到為君，後到為臣。
+  reason: Restored; missing from Wikisource 1955020 but in Wikisource 2614365 and a modern annotated copy, before 莫道君行早.
+
+- insert_after: 248
+  text: 莫把真心空計較，兒孫自有兒孫福。
+  reason: Restored; Wikisource 1955020 merged its first half into line 248. In Wikisource 2614365 and a modern annotated copy.

@@ -12,6 +12,7 @@ import {
 const proverb = (overrides: Partial<Proverb> = {}): Proverb => ({
   id: 'zgxw-001',
   themes: ['friendship'],
+  source: [16],
   text_trad: '路遙知馬力，日久見人心。',
   text_simp: '路遥知马力，日久见人心。',
   pinyin: 'lù yáo zhī mǎ lì rì jiǔ jiàn rén xīn',
@@ -64,4 +65,25 @@ test('reviewed entries need readings', () => {
 test('toneless readings for search', () => {
   assert.equal(tonelessPinyin('lù yáo nǚ'), 'lu yao nv');
   assert.equal(tonelessJyutping('lou6 jiu4'), 'lou jiu');
+});
+
+test('text must match the source lines it names', () => {
+  const withSource = (p: Proverb): Content => ({
+    ...content(p),
+    sourceLines: new Map([['16', '路遙知馬力，日久見人心。']]),
+  });
+  assert.deepEqual(checkContent(withSource(proverb())), []);
+  const changed = checkContent(
+    withSource(
+      proverb({
+        text_trad: '路遙知馬力，事久見人心。',
+        text_simp: undefined,
+        pinyin: undefined,
+        jyutping: undefined,
+      }),
+    ),
+  );
+  assert.match(changed[0].message, /does not match source line\(s\) 16/);
+  const missing = checkContent(withSource(proverb({ source: [99] })));
+  assert.match(missing[0].message, /not in common-edition.yaml/);
 });

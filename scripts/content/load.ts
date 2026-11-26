@@ -19,6 +19,8 @@ export const themeSchema = z.strictObject({
 export const proverbSchema = z.strictObject({
   id: z.string().regex(/^zgxw-\d{3}$/, 'use the form zgxw-001'),
   themes: z.array(z.string()).min(1),
+  /** Line numbers in content/source/common-edition.yaml this entry covers. */
+  source: z.array(z.union([z.number().int().positive(), z.string().regex(/^\d+[a-z]$/)])).min(1),
   text_trad: text,
   text_simp: text.optional(),
   pinyin: text.optional(),
@@ -48,7 +50,11 @@ export type LessonFile = z.infer<typeof lessonFileSchema>;
 export interface Content {
   themes: Theme[];
   lessons: (LessonFile & { file: string })[];
+  /** Base text by line number, from content/source/common-edition.yaml. */
+  sourceLines?: Map<string, string>;
 }
+
+export const SOURCE_FILE = join(CONTENT_DIR, 'source', 'common-edition.yaml');
 
 export interface Problem {
   file: string;
@@ -98,7 +104,13 @@ export function loadContent(): { content: Content; problems: Problem[] } {
     else problems.push(...issuesToProblems(`lessons/${file}`, result.error));
   }
 
-  const content = { themes, lessons };
+  const sourceLines = new Map<string, string>(
+    (parse(readFileSync(SOURCE_FILE, 'utf8')) as { n: number | string; text: string }[]).map(
+      (line) => [String(line.n), line.text],
+    ),
+  );
+
+  const content = { themes, lessons, sourceLines };
   problems.push(...checkContent(content));
   return { content, problems };
 }
@@ -139,6 +151,16 @@ export function checkContent(content: Content): Problem[] {
       }
 
       const chars = hanChars(p.text_trad);
+      if (content.sourceLines) {
+        const lines = p.source.map((n) => content.sourceLines!.get(String(n)));
+        if (lines.some((line) => line === undefined)) {
+          problem(`source names a line that is not in common-edition.yaml: ${p.source.join(', ')}`);
+        } else if (hanChars(lines.join('')).join('') !== chars.join('')) {
+          problem(
+            `text_trad does not match source line(s) ${p.source.join(', ')}: ${lines.join('')}`,
+          );
+        }
+      }
       if (p.text_simp !== undefined && hanChars(p.text_simp).length !== chars.length) {
         problem(
           `text_simp has ${hanChars(p.text_simp).length} characters, text_trad has ${chars.length}`,

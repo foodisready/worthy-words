@@ -12,6 +12,7 @@ lesson:
 
 proverbs:
   - id: zgxw-001
+    source: [1]
     themes: [diligence-time]
     text_trad: 昔時賢文，誨汝諄諄。集韻增廣，多見多聞。
     text_simp: 昔时贤文，诲汝谆谆。集韵增广，多见多闻。
@@ -24,6 +25,7 @@ proverbs:
     reviewed: false
 
   - id: zgxw-002
+    source: [2]
     themes: [diligence-time]
     text_trad: 觀今宜鑑古，無古不成今。
     text_simp: 观今宜鉴古，无古不成今。
@@ -37,6 +39,7 @@ proverbs:
     reviewed: false
 
   - id: zgxw-003
+    source: [3]
     themes: [character-friendship, conduct-patience]
     text_trad: 知己知彼，將心比心。
     text_simp: 知己知彼，将心比心。
@@ -50,6 +53,7 @@ proverbs:
     reviewed: false
 
   - id: zgxw-004
+    source: [4]
     themes: [character-friendship]
     text_trad: 酒逢知己飲，詩向會人吟。
     text_simp: 酒逢知己饮，诗向会人吟。
@@ -62,6 +66,7 @@ proverbs:
     reviewed: false
 
   - id: zgxw-005
+    source: [5]
     themes: [character-friendship]
     text_trad: 相識滿天下，知心能幾人。
     text_simp: 相识满天下，知心能几人。
