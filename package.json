@@ -13,7 +13,8 @@
     "test:scripts": "node --test \"scripts/**/*.test.ts\"",
     "typecheck:scripts": "tsc -p scripts",
     "e2e": "playwright test",
-    "build:pages": "npm run content:build && ng build --base-href /worthy-words/ && node scripts/pages-404.ts"
+    "build:pages": "npm run content:build && ng build --base-href /worthy-words/ && node scripts/pages-404.ts",
+    "content:readings": "node scripts/content/review-readings.ts"
   },
   "private": true,
   "packageManager": "npm@11.17.0",

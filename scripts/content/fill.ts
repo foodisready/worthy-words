@@ -1,29 +1,17 @@
 // Fills in text_simp, pinyin and jyutping where an entry has none, keeping the
-// file's comments and layout. Never changes an entry marked reviewed: true, and
-// never replaces a value that is already there. Check the results by hand,
-// especially characters with more than one reading.
-// Usage: npm run content:fill
+// file's comments and layout. Never changes an entry marked reviewed: true.
+// With --refill, also replaces existing values on unreviewed entries (use after
+// improving the generator; hand corrections on those entries are lost).
+// Check the results with `npm run content:readings`.
+// Usage: npm run content:fill [-- --refill]
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import * as OpenCC from 'opencc-js';
-import { pinyin } from 'pinyin-pro';
-import ToJyutping from 'to-jyutping';
 import { isMap, isSeq, parseDocument, type YAMLMap } from 'yaml';
-import { LESSONS_DIR, hanChars, lessonFiles } from './load.ts';
+import { LESSONS_DIR, lessonFiles } from './load.ts';
+import { generateReadings } from './readings.ts';
 
-const toSimplified = OpenCC.Converter({ from: 'hk', to: 'cn' });
-
-function readings(trad: string) {
-  const simp = toSimplified(trad);
-  // Pinyin is read from the simplified text, which pinyin-pro knows better
-  // (for example 幾 is read jī, but 几 in 幾人 is jǐ).
-  const py = pinyin(simp, { type: 'array', nonZh: 'removed' }).join(' ');
-  const jp = ToJyutping.getJyutpingList(trad)
-    .filter(([char]) => hanChars(char).length > 0)
-    .map(([char, reading]) => reading?.split(' ')[0] ?? `?${char}`)
-    .join(' ');
-  return { text_simp: simp, pinyin: py, jyutping: jp };
-}
+const refill = process.argv.includes('--refill');
+const FIELDS = ['text_simp', 'pinyin', 'jyutping'] as const;
 
 let changed = 0;
 for (const file of lessonFiles()) {
@@ -40,12 +28,17 @@ for (const file of lessonFiles()) {
     const trad = entry.get('text_trad');
     if (typeof trad !== 'string') continue;
 
-    const values = readings(trad);
-    // Insert new fields straight after text_trad, in a fixed order.
+    const values = generateReadings(trad);
+    // New fields go straight after text_trad, in a fixed order.
     let at = entry.items.findIndex((pair) => String(pair.key) === 'text_trad') + 1;
-    for (const key of ['text_simp', 'pinyin', 'jyutping'] as const) {
+    for (const key of FIELDS) {
       const index = entry.items.findIndex((pair) => String(pair.key) === key);
       if (index >= 0) {
+        if (refill && entry.get(key) !== values[key]) {
+          entry.set(key, values[key]);
+          fileChanged = true;
+          changed += 1;
+        }
         at = index + 1;
         continue;
       }
@@ -53,11 +46,11 @@ for (const file of lessonFiles()) {
       at += 1;
       fileChanged = true;
       changed += 1;
-      if (values[key].includes('?')) {
-        console.warn(
-          `${file} ${entry.get('id')}: no ${key} found for some characters (marked "?")`,
-        );
-      }
+    }
+    if (values.jyutping.includes('?')) {
+      console.warn(
+        `${file} ${entry.get('id')}: no Jyutping found for some characters (marked "?")`,
+      );
     }
   }
   if (fileChanged) {
@@ -65,4 +58,8 @@ for (const file of lessonFiles()) {
     console.log(`Updated lessons/${file}`);
   }
 }
-console.log(changed ? `Filled ${changed} field(s). Check them by hand.` : 'Nothing to fill.');
+console.log(
+  changed
+    ? `Filled ${changed} field(s). Check them with "npm run content:readings".`
+    : 'Nothing to fill.',
+);

@@ -1,0 +1,61 @@
+# Drafts awaiting review.
+lesson:
+  id: 5
+  title_zh: 第五課：同心與相處
+  title_en: "Lesson 5: Getting Along"
+
+proverbs:
+  - id: zgxw-017
+    source: [17]
+    themes: [character-friendship]
+    text_trad: 兩人一般心，無錢堪買金；一人一般心，有錢難買針。
+    text_simp: 两人一般心，无钱堪买金；一人一般心，有钱难买针。
+    pinyin: liǎng rén yī bān xīn wú qián kān mǎi jīn yī rén yī bān xīn yǒu qián nán mǎi zhēn
+    jyutping: loeng5 jan4 jat1 bun1 sam1 mou4 cin4 ham1 maai5 gam1 jat1 jan4 jat1 bun1 sam1 jau5 cin4 naan4 maai5 zam1
+    explain_cantonese: 兩個人一條心，冇錢都可以買到金；各自各心，有錢都買唔到一口針。齊心就乜都做得到。
+    explain_standard: 兩個人同心，沒有錢也能買到金子；各懷各的心思，有錢也難買到一根針。
+    en_natural: Two people of one mind can buy gold without money; people of different minds can't buy a needle even with money.
+    en_literal: Two people, one kind of heart, without money can buy gold; each person, his own kind of heart, with money it is hard to buy a needle.
+    en_equivalent: United we stand, divided we fall.
+    reviewed: false
+
+  - id: zgxw-018
+    source: [18]
+    themes: [conduct-patience, character-friendship]
+    text_trad: 相見易得好，久住難為人。
+    text_simp: 相见易得好，久住难为人。
+    pinyin: xiāng jiàn yì dé hǎo jiǔ zhù nán wéi rén
+    jyutping: soeng1 gin3 ji6 dak1 hou2 gau2 zyu6 naan4 wai4 jan4
+    explain_cantonese: 間中見吓面，好容易相處得好；住埋一齊耐咗，就好難做到樣樣都令人滿意。
+    explain_standard: 偶爾見面，容易相處融洽；長久住在一起，就難以處處周到。
+    en_natural: It's easy to get on when you only meet now and then; living together for long is harder.
+    en_literal: Meeting, easy to be on good terms; staying long, hard to be a (good) person.
+    en_equivalent: Guests, like fish, begin to smell after three days.
+    reviewed: false
+
+  - id: zgxw-019
+    source: [19]
+    themes: [character-friendship]
+    text_trad: 馬行無力皆因瘦，人不風流只為貧。
+    text_simp: 马行无力皆因瘦，人不风流只为贫。
+    pinyin: mǎ xíng wú lì jiē yīn shòu rén bù fēng liú zhǐ wèi pín
+    jyutping: maa5 hang4 mou4 lik6 gaai1 jan1 sau3 jan4 bat1 fung1 lau4 zi2 wai6 pan4
+    explain_cantonese: 隻馬行得冇力，都係因為佢瘦；一個人冇風采、唔夠瀟灑，往往只係因為窮。
+    explain_standard: 馬走不動，都是因為瘦弱；人不夠瀟灑體面，只因為貧窮。
+    en_natural: A horse that walks without strength is thin; a person without style is poor.
+    en_literal: A horse walking without strength, all because it is thin; a person not elegant, only because he is poor.
+    context_note: 風流 here means elegance and ease, not its modern sense of romantic affairs. Don't judge people by how they look; often it's only circumstance.
+    reviewed: false
+
+  - id: zgxw-020
+    source: [20]
+    themes: [conduct-patience]
+    text_trad: 饒人不是癡漢，癡漢不會饒人。
+    text_simp: 饶人不是痴汉，痴汉不会饶人。
+    pinyin: ráo rén bù shì chī hàn chī hàn bù huì ráo rén
+    jyutping: jiu4 jan4 bat1 si6 ci1 hon3 ci1 hon3 bat1 wui5 jiu4 jan4
+    explain_cantonese: 肯放過人、讓吓人嘅，唔係傻佬；正正係傻佬，先至唔識讓人。
+    explain_standard: 肯寬恕別人的人並不傻，真正的傻子反而不懂得寬恕別人。
+    en_natural: Those who forgive are not fools; it's the fools who can't forgive.
+    en_literal: Sparing others is not (the act of) a foolish man; a foolish man does not spare others.
+    reviewed: false

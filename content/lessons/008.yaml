@@ -1,0 +1,61 @@
+# Drafts awaiting review.
+lesson:
+  id: 8
+  title_zh: 第八課：人情冷暖
+  title_en: "Lesson 8: Rich and Poor"
+
+proverbs:
+  - id: zgxw-029
+    source: [29]
+    themes: [character-friendship]
+    text_trad: 貧居鬧市無人問，富在深山有遠親。
+    text_simp: 贫居闹市无人问，富在深山有远亲。
+    pinyin: pín jū nào shì wú rén wèn fù zài shēn shān yǒu yuǎn qīn
+    jyutping: pan4 geoi1 naau6 si5 mou4 jan4 man6 fu3 zoi6 sam1 saan1 jau5 jyun5 can1
+    explain_cantonese: 窮嘅時候，就算住喺最旺嘅地方都冇人理；有錢嘅時候，就算住喺深山都有遠親搵上門。
+    explain_standard: 貧窮時即使住在熱鬧的街市，也無人問候；富有時即使住在深山，也有遠方親戚來探訪。
+    en_natural: Live poor in a busy town and no one asks after you; live rich deep in the mountains and distant relatives come calling.
+    en_literal: Poor, dwelling in a busy market, no one asks; rich, being in deep mountains, (you) have distant kin.
+    en_equivalent: Prosperity makes friends; adversity tries them.
+    reviewed: false
+
+  - id: zgxw-030
+    source: [30]
+    themes: [cultivation-speech]
+    text_trad: 誰人背後無人說，哪個人前不說人？
+    text_simp: 谁人背后无人说，哪个人前不说人？
+    pinyin: shuí rén bèi hòu wú rén shuō nǎ gè rén qián bù shuō rén
+    jyutping: seoi4 jan4 bui3 hau6 mou4 jan4 syut3 naa5 go3 jan4 cin4 bat1 syut3 jan4
+    explain_cantonese: 邊個背後冇俾人講過？又有邊個喺人哋面前冇講過其他人呢？
+    explain_standard: 誰背後沒有被人議論過？誰又沒在別人面前議論過人呢？
+    en_natural: Who isn't talked about behind their back? And who never talks about others?
+    en_literal: Who has no one talking behind his back? Which person, in front of others, does not talk about people?
+    context_note: Gossip is everywhere. Don't be shaken by it, and mind your own tongue.
+    reviewed: false
+
+  - id: zgxw-031
+    source: [31]
+    themes: [cultivation-speech, character-friendship]
+    text_trad: 有錢道真語，無錢語不真。
+    text_simp: 有钱道真语，无钱语不真。
+    pinyin: yǒu qián dào zhēn yǔ wú qián yǔ bù zhēn
+    jyutping: jau5 cin4 dou6 zan1 jyu5 mou4 cin4 jyu5 bat1 zan1
+    explain_cantonese: 有錢人講嘢，人人都當真；冇錢人講真話，都冇人信。
+    explain_standard: 有錢人說的話，人人當真；沒錢人說的話，真的也沒人信。
+    en_natural: When the rich speak, people believe them; when the poor speak, even the truth isn't believed.
+    en_literal: Having money, (one) speaks true words; without money, (one's) words are not true.
+    reviewed: false
+
+  - id: zgxw-032
+    source: [32]
+    themes: [character-friendship]
+    text_trad: 不信但看筵中酒，杯杯先勸有錢人。
+    text_simp: 不信但看筵中酒，杯杯先劝有钱人。
+    pinyin: bù xìn dàn kàn yán zhōng jiǔ bēi bēi xiān quàn yǒu qián rén
+    jyutping: bat1 seon3 daan6 hon3 jin4 zung1 zau2 bui1 bui1 sin1 hyun3 jau5 cin4 jan4
+    explain_cantonese: 唔信嘅話，睇吓飲宴嗰陣啲酒，每一杯都係先敬有錢人。
+    explain_standard: 不信的話，看看宴席上的酒，每一杯都是先敬有錢人。
+    en_natural: If you doubt it, watch the wine at a banquet; every cup goes first to the rich.
+    en_literal: If you do not believe it, just look at the wine at the feast; cup after cup is first pressed on the rich.
+    context_note: Continues the line before. 勸酒 is to urge someone to drink; a later text reads 先敬 ("first offered to").
+    reviewed: false

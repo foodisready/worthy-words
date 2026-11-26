@@ -1,0 +1,61 @@
+# Drafts awaiting review.
+lesson:
+  id: 6
+  title_zh: 第六課：親與鄉
+  title_en: "Lesson 6: Kin and Home"
+
+proverbs:
+  - id: zgxw-021
+    source: [21]
+    themes: [character-friendship]
+    text_trad: 是親不是親，非親卻是親。
+    text_simp: 是亲不是亲，非亲却是亲。
+    pinyin: shì qīn bù shì qīn fēi qīn què shì qīn
+    jyutping: si6 can1 bat1 si6 can1 fei1 can1 koek3 si6 can1
+    explain_cantonese: 有啲人係親戚，但一啲都唔似親人；有啲人唔係親戚，反而好似親人咁。
+    explain_standard: 有的人是親戚，卻不像親人；有的人不是親戚，反而比親人還親。
+    en_natural: Some relatives don't act like family; some who aren't family are closer than kin.
+    en_literal: Being kin, not being kin; not kin, yet being kin.
+    en_equivalent: Friends are the family you choose.
+    reviewed: false
+
+  - id: zgxw-022
+    source: [22]
+    themes: [character-friendship]
+    text_trad: 美不美，鄉中水；親不親，故鄉人。
+    text_simp: 美不美，乡中水；亲不亲，故乡人。
+    pinyin: měi bù měi xiāng zhōng shuǐ qīn bù qīn gù xiāng rén
+    jyutping: mei5 bat1 mei5 hoeng1 zung1 seoi2 can1 bat1 can1 gu3 hoeng1 jan4
+    explain_cantonese: 好唔好飲都好，始終係家鄉啲水最甜；親唔親都好，始終係同鄉最親。
+    explain_standard: 不管好不好，家鄉的水總是最甜；不管親不親，同鄉人總是最親。
+    en_natural: Sweet or not, it's water from home; close or not, they're people from home.
+    en_literal: Beautiful or not, hometown water; kin or not, people of the old home.
+    en_equivalent: There's no place like home.
+    reviewed: false
+
+  - id: zgxw-023
+    source: [23]
+    themes: [diligence-time]
+    text_trad: 鶯花猶怕春光老，豈可教人枉度春？
+    text_simp: 莺花犹怕春光老，岂可教人枉度春？
+    pinyin: yīng huā yóu pà chūn guāng lǎo qǐ kě jiào rén wǎng dù chūn
+    jyutping: ang1 faa1 jau4 paa3 ceon1 gwong1 lou5 hei2 ho2 gaau3 jan4 wong2 dou6 ceon1
+    explain_cantonese: 黃鶯同春花都怕春天過去，人又點可以白白嘥咗自己嘅青春呢？
+    explain_standard: 黃鶯和春花尚且害怕春光逝去，怎能讓人虛度青春呢？
+    en_natural: Even orioles and flowers fear the end of spring; how can anyone let their own spring go to waste?
+    en_literal: Orioles and flowers still fear the spring light growing old; how can one let a person pass the spring in vain?
+    reviewed: false
+
+  - id: zgxw-024
+    source: [24]
+    themes: [character-friendship]
+    text_trad: 相逢不飲空歸去，洞口桃花也笑人。
+    text_simp: 相逢不饮空归去，洞口桃花也笑人。
+    pinyin: xiāng féng bù yǐn kōng guī qù dòng kǒu táo huā yě xiào rén
+    jyutping: soeng1 fung4 bat1 jam2 hung1 gwai1 heoi3 dung6 hau2 tou4 faa1 jaa5 siu3 jan4
+    explain_cantonese: 朋友難得相聚，唔飲番杯就咁返去，連山洞門口啲桃花都會笑你。
+    explain_standard: 朋友難得相逢，不喝一杯就空手回去，連洞口的桃花也會笑你。
+    en_natural: Meet a friend and leave without sharing a drink, and even the peach blossoms by the cave will laugh at you.
+    en_literal: Meeting, not drinking, going home empty; the peach blossoms at the cave mouth also laugh at the person.
+    context_note: The peach blossoms by a cave recall Tao Yuanming's Peach Blossom Spring (《桃花源記》), a hidden paradise found through an opening in a hill.
+    reviewed: false

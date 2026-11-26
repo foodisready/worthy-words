@@ -1,0 +1,61 @@
+# Drafts awaiting review.
+lesson:
+  id: 2
+  title_zh: 第二課：知心難得
+  title_en: "Lesson 2: A True Friend Is Rare"
+
+proverbs:
+  - id: zgxw-005
+    source: [5]
+    themes: [character-friendship]
+    text_trad: 相識滿天下，知心能幾人？
+    text_simp: 相识满天下，知心能几人？
+    pinyin: xiāng shí mǎn tiān xià zhī xīn néng jǐ rén
+    jyutping: soeng1 sik1 mun5 tin1 haa6 zi1 sam1 nang4 gei2 jan4
+    explain_cantonese: 識得嘅人周圍都係，但真正明白你、同你交心嘅，又有幾個呢？
+    explain_standard: 認識的人遍布天下，但真正了解你、與你交心的，又能有幾個呢？
+    en_natural: You may know people all over the world, but how many truly know your heart?
+    en_literal: Acquaintances fill all under heaven; those who know the heart, how many can there be?
+    reviewed: false
+
+  - id: zgxw-006
+    source: [6]
+    themes: [character-friendship, conduct-patience]
+    text_trad: 相逢好似初相識，到老終無怨恨心。
+    text_simp: 相逢好似初相识，到老终无怨恨心。
+    pinyin: xiāng féng hǎo sì chū xiāng shí dào lǎo zhōng wú yuàn hèn xīn
+    jyutping: soeng1 fung4 hou2 ci5 co1 soeng1 sik1 dou3 lou5 zung1 mou4 jyun3 han6 sam1
+    explain_cantonese: 同人相處，如果可以一直好似啱啱識嗰陣咁客氣、咁珍惜，咁到老都唔會互相埋怨。
+    explain_standard: 與人相處，若能一直像初次相識時那樣客氣、珍惜，那麼到老也不會心生怨恨。
+    en_natural: If every meeting felt like the first, there would be no resentment even in old age.
+    en_literal: (If) meeting were like first becoming acquainted, to old age there would in the end be no resentful heart.
+    context_note: Most readers take this as keeping the courtesy and freshness of a first meeting. Some read it as advice not to get too close to people.
+    reviewed: false
+
+  - id: zgxw-007
+    source: [7]
+    themes: [diligence-time, character-friendship]
+    text_trad: 近水知魚性，近山識鳥音。
+    text_simp: 近水知鱼性，近山识鸟音。
+    pinyin: jìn shuǐ zhī yú xìng jìn shān shí niǎo yīn
+    jyutping: gan6 seoi2 zi1 jyu4 sing3 gan6 saan1 sik1 niu5 jam1
+    explain_cantonese: 住近水邊，就熟識魚嘅習性；住近山，就認得雀仔嘅叫聲。同咩接觸得多，就自然了解佢。
+    explain_standard: 住在水邊的人熟悉魚的習性，住在山邊的人能辨別鳥的叫聲。常接觸甚麼，就了解甚麼。
+    en_natural: Live by the water and you learn the ways of fish; live by the hills and you learn the songs of birds.
+    en_literal: Near water, know the nature of fish; near mountains, recognise the sounds of birds.
+    context_note: Knowledge comes from long, close contact, and that includes knowing people.
+    reviewed: false
+
+  - id: zgxw-008
+    source: [8]
+    themes: [character-friendship]
+    text_trad: 易漲易退山溪水，易反易覆小人心。
+    text_simp: 易涨易退山溪水，易反易覆小人心。
+    pinyin: yì zhǎng yì tuì shān xī shuǐ yì fǎn yì fù xiǎo rén xīn
+    jyutping: ji6 zoeng3 ji6 teoi3 saan1 kai1 seoi2 ji6 faan2 ji6 fuk1 siu2 jan4 sam1
+    explain_cantonese: 山溪啲水，一落雨就漲，一停雨就退；小人嘅心都係咁，反覆無常，今日一個樣，聽日又一個樣。
+    explain_standard: 山間溪水容易上漲，也容易消退；小人的心也是這樣，反覆無常。
+    en_natural: Like a mountain stream that quickly rises and quickly falls, a petty person's heart is quick to turn.
+    en_literal: Easily rising, easily falling, mountain-stream water; easily turning, easily overturning, a petty man's heart.
+    context_note: 小人 is a person of small character, the opposite of 君子 (a person of noble character), not a child.
+    reviewed: false

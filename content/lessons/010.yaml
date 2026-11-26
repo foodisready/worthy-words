@@ -1,0 +1,62 @@
+# Drafts awaiting review.
+lesson:
+  id: 10
+  title_zh: 第十課：莫道君行早
+  title_en: "Lesson 10: Someone Is Always Earlier"
+
+proverbs:
+  - id: zgxw-037
+    source: [36a]
+    themes: [diligence-time]
+    text_trad: 古人不見今時月，今月曾經照古人。
+    text_simp: 古人不见今时月，今月曾经照古人。
+    pinyin: gǔ rén bù jiàn jīn shí yuè jīn yuè céng jīng zhào gǔ rén
+    jyutping: gu2 jan4 bat1 gin3 gam1 si4 jyut6 gam1 jyut6 cang4 ging1 ziu3 gu2 jan4
+    explain_cantonese: 古人睇唔到今日嘅月光，但今日呢個月亮，以前一樣照過古人。
+    explain_standard: 古人看不到今天的月亮，但今天的月亮也曾照過古人。
+    en_natural: People of old never saw tonight's moon, yet this same moon once shone on them.
+    en_literal: The ancients do not see the moon of the present; the present moon once shone on the ancients.
+    context_note: Adapted from Li Bai's 《把酒問月》, which reads 「今人不見古時月，今月曾經照古人」 ("People today never saw the moon of old").
+    reviewed: false
+
+  - id: zgxw-038
+    source: [36b]
+    themes: [diligence-time]
+    text_trad: 先到為君，後到為臣。
+    text_simp: 先到为君，后到为臣。
+    pinyin: xiān dào wéi jūn hòu dào wéi chén
+    jyutping: sin1 dou3 wai4 gwan1 hau6 dou3 wai4 san4
+    explain_cantonese: 先到嘅做主，後到嘅就要聽人使喚。
+    explain_standard: 先到的人做君主，後到的人做臣子。
+    en_natural: The first to arrive becomes the ruler; those who come later become subjects.
+    en_literal: Arriving first, be lord; arriving later, be minister.
+    en_equivalent: First come, first served.
+    context_note: Recalls King Huai of Chu's promise that whoever first entered Guanzhong would be its king, which Liu Bang did before Xiang Yu.
+    reviewed: false
+
+  - id: zgxw-039
+    source: [37]
+    themes: [diligence-time]
+    text_trad: 莫道君行早，更有早行人。
+    text_simp: 莫道君行早，更有早行人。
+    pinyin: mò dào jūn xíng zǎo gèng yǒu zǎo xíng rén
+    jyutping: mok6 dou6 gwan1 hang4 zou2 gang3 jau5 zou2 hang4 jan4
+    explain_cantonese: 唔好以為自己已經好早出門，仲有人比你更早。
+    explain_standard: 不要以為你已經走得很早，還有人走得比你更早。
+    en_natural: Don't think you set out early; someone set out earlier still.
+    en_literal: Do not say you travel early; there are people who travel earlier.
+    context_note: A warning against being pleased with yourself. However hard you work, someone is working harder.
+    reviewed: false
+
+  - id: zgxw-040
+    source: [38]
+    themes: [character-friendship]
+    text_trad: 莫信直中直，須防仁不仁。
+    text_simp: 莫信直中直，须防仁不仁。
+    pinyin: mò xìn zhí zhōng zhí xū fáng rén bù rén
+    jyutping: mok6 seon3 zik6 zung1 zik6 seoi1 fong4 jan4 bat1 jan4
+    explain_cantonese: 唔好盡信表面好正直嘅人，要提防佢嘅仁義只係扮出嚟。
+    explain_standard: 不要輕信看似正直的人，要提防表面仁義、內心不仁的人。
+    en_natural: Don't trust everyone who seems upright; beware of kindness that isn't kind.
+    en_literal: Do not believe the straightness within the straight; you must guard against the benevolent who are not benevolent.
+    reviewed: false

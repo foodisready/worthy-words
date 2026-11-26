@@ -1,0 +1,62 @@
+# Drafts awaiting review.
+lesson:
+  id: 7
+  title_zh: 第七課：待客之道
+  title_en: "Lesson 7: Host and Guest"
+
+proverbs:
+  - id: zgxw-025
+    source: [25]
+    themes: [conduct-patience]
+    text_trad: 紅粉佳人休使老，風流浪子莫教貧。
+    text_simp: 红粉佳人休使老，风流浪子莫教贫。
+    pinyin: hóng fěn jiā rén xiū shǐ lǎo fēng liú làng zǐ mò jiào pín
+    jyutping: hung4 fan2 gaai1 jan4 jau1 si2 lou5 fung1 lau4 long6 zi2 mok6 gaau3 pan4
+    explain_cantonese: 靚女最怕老，風流浪子最怕窮。每個人都有最怕失去嘅嘢。
+    explain_standard: 美人最怕年華老去，風流浪子最怕貧窮。每個人都有最怕失去的東西。
+    en_natural: Don't let a beauty grow old; don't let a carefree man grow poor.
+    en_literal: Rouged and powdered beauty, do not let her age; dashing wanderer, do not let him be poor.
+    context_note: This reflects an old view that a woman's worth lay in her looks. Read it as an observation about what people fear losing, not as advice.
+    reviewed: false
+
+  - id: zgxw-026
+    source: [26]
+    themes: [conduct-patience]
+    text_trad: 在家不會迎賓客，出外方知少主人。
+    text_simp: 在家不会迎宾客，出外方知少主人。
+    pinyin: zài jiā bù huì yíng bīn kè chū wài fāng zhī shǎo zhǔ rén
+    jyutping: zoi6 gaa1 bat1 wui5 jing4 ban1 haak3 ceot1 ngoi6 fong1 zi1 siu2 zyu2 jan4
+    explain_cantonese: 喺屋企唔識招呼客人，等到自己出門做客，先知道冇主人招呼係幾咁難受。
+    explain_standard: 在家不懂得接待客人，等到自己出門在外，才知道沒有主人招待的難處。
+    en_natural: If you never welcome guests at home, you'll find no one to welcome you when you travel.
+    en_literal: At home not knowing how to receive guests; going out, only then (you) know (what it is to) lack a host.
+    en_equivalent: Treat others as you would like to be treated.
+    reviewed: false
+
+  - id: zgxw-027
+    source: [27]
+    themes: [character-friendship]
+    text_trad: 黃芩無假，阿魏無真。
+    text_simp: 黄芩无假，阿魏无真。
+    pinyin: huáng qín wú jiǎ ā wèi wú zhēn
+    jyutping: wong4 kam4 mou4 gaa2 aa3 ngai6 mou4 zan1
+    explain_cantonese: 黃芩呢味藥好平，冇人會整假貨；阿魏好貴，市面上反而好難搵到真貨。
+    explain_standard: 黃芩便宜，沒有人造假；阿魏昂貴，市面上反而很少有真貨。
+    en_natural: Nobody fakes skullcap root; genuine asafoetida is hard to find.
+    en_literal: Huangqin has no fakes; awei has no genuine.
+    context_note: 黃芩 (Chinese skullcap root) is a cheap, common herb. 阿魏 (asafoetida), an imported resin, was costly and often faked. The more something is worth, the more fakes there are, in goods and in people.
+    reviewed: false
+
+  - id: zgxw-028
+    source: [28]
+    themes: [conduct-patience]
+    text_trad: 客來主不顧，應恐是癡人。
+    text_simp: 客来主不顾，应恐是痴人。
+    pinyin: kè lái zhǔ bù gù yīng kǒng shì chī rén
+    jyutping: haak3 loi4 zyu2 bat1 gu3 jing1 hung2 si6 ci1 jan4
+    explain_cantonese: 有客人嚟到，主人都唔招呼，恐怕呢個主人係個唔識做人嘅傻佬。
+    explain_standard: 客人來了，主人卻不招呼，恐怕這主人是個不通人情的傻子。
+    en_natural: A host who ignores his guests must be a fool.
+    en_literal: A guest comes and the host pays no attention; one fears he is a foolish person.
+    context_note: A later text has a longer version, 客來主不顧，自是無良賓；良賓主不顧，應恐是癡人 ("If a host ignores a guest, perhaps the guest is no good; if he ignores a good guest, he must be a fool").
+    reviewed: false

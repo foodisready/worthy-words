@@ -1,0 +1,63 @@
+# Drafts awaiting review.
+lesson:
+  id: 4
+  title_zh: 第四課：日久見人心
+  title_en: "Lesson 4: Time Reveals the Heart"
+
+proverbs:
+  - id: zgxw-013
+    source: [13]
+    themes: [cultivation-speech]
+    text_trad: 錢財如糞土，仁義值千金。
+    text_simp: 钱财如粪土，仁义值千金。
+    pinyin: qián cái rú fèn tǔ rén yì zhí qiān jīn
+    jyutping: cin4 coi4 jyu4 fan3 tou2 jan4 ji6 zik6 cin1 gam1
+    explain_cantonese: 錢財好似泥土咁，嚟嚟去去；做人有仁有義，先至係真正值錢。
+    explain_standard: 錢財如同塵土，來來去去；仁愛和道義才真正價值千金。
+    en_natural: Money is like dirt; kindness and integrity are worth a fortune.
+    en_literal: Money and wealth are like dung and dirt; benevolence and righteousness are worth a thousand gold.
+    context_note: 糞土 here means dirt, something worthless, not literally dung.
+    reviewed: false
+
+  - id: zgxw-014
+    source: [14]
+    themes: [conduct-patience]
+    text_trad: 流水下灘非有意，白雲出岫本無心。
+    text_simp: 流水下滩非有意，白云出岫本无心。
+    pinyin: liú shuǐ xià tān fēi yǒu yì bái yún chū xiù běn wú xīn
+    jyutping: lau4 seoi2 haa6 taan1 fei1 jau5 ji3 baak6 wan4 ceot1 zau6 bun2 mou4 sam1
+    explain_cantonese: 水流落河灘，唔係佢特登；白雲由山谷飄出嚟，本來就冇乜心思。順其自然，唔使樣樣都諗咁多。
+    explain_standard: 流水沖下河灘並非有意，白雲飄出山谷本來無心。萬事順其自然。
+    en_natural: Water runs down the rapids without meaning to; clouds drift out of the hills with no intent at all.
+    en_literal: Flowing water going down the rapids is not intentional; white clouds leaving the hills are by nature without mind.
+    context_note: From Tao Yuanming's 《歸去來兮辭》：「雲無心以出岫，鳥倦飛而知還」. 岫 is a hill or mountain cave.
+    reviewed: false
+
+  - id: zgxw-015
+    source: [15]
+    themes: [diligence-time]
+    text_trad: 當時若不登高望，誰信東流海洋深？
+    text_simp: 当时若不登高望，谁信东流海洋深？
+    pinyin: dāng shí ruò bù dēng gāo wàng shuí xìn dōng liú hǎi yáng shēn
+    jyutping: dong1 si4 joek6 bat1 dang1 gou1 mong6 seoi4 seon3 dung1 lau4 hoi2 joeng4 sam1
+    explain_cantonese: 當初如果唔係行上高處望一望，邊個會信向東流嘅江水，最後會流入咁深嘅大海？好多嘢要親眼睇過先知。
+    explain_standard: 當初若不是登上高處眺望，誰會相信向東奔流的江河，最終匯成深廣的大海？很多事要親眼看過才知道。
+    en_natural: Had you not climbed high to look, would you have believed how deep the sea is that the rivers flow into?
+    en_literal: At that time, if not climbing high to look, who would believe the depth of the east-flowing ocean?
+    context_note: China's great rivers flow east to the sea, so 東流 stands for rivers in general.
+    reviewed: false
+
+  - id: zgxw-016
+    source: [16]
+    themes: [character-friendship]
+    text_trad: 路遙知馬力，事久見人心。
+    text_simp: 路遥知马力，事久见人心。
+    pinyin: lù yáo zhī mǎ lì shì jiǔ jiàn rén xīn
+    jyutping: lou6 jiu4 zi1 maa5 lik6 si6 gau2 gin3 jan4 sam1
+    explain_cantonese: 路程夠遠，先知道匹馬有幾大力；事情經歷得夠耐，先睇得出一個人嘅心。
+    explain_standard: 路途遙遠，才知道馬的力氣；事情經歷久了，才看得出人心。
+    en_natural: A long road tests a horse's strength; time and trouble reveal a person's heart.
+    en_literal: The road far, know the horse's strength; affairs long, see the person's heart.
+    en_equivalent: Time will tell.
+    context_note: Usually quoted as 路遙知馬力，日久見人心 ("days long"). The common edition reads 事久 ("affairs long").
+    reviewed: false

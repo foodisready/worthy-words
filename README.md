@@ -31,9 +31,10 @@ How it fits together:
 ## Adding or improving content
 
 1. Edit or add a file in `content/lessons/`.
-2. `npm run content:fill` adds simplified text, Pinyin and Jyutping to new entries. Check them by hand: tools often get characters with more than one reading wrong.
-3. `npm run content:check` reports any problems.
-4. Set `reviewed: true` only once a person has checked the whole entry.
+2. `npm run content:fill` adds simplified text, Pinyin and Jyutping to new entries.
+3. `npm run content:readings` lists every reading to check: characters whose reading depends on meaning, literary (文讀) Cantonese readings, and hand corrections. Pinyin uses dictionary tones (一 yī, 不 bù, no tone changes); Jyutping uses literary readings, as classical text is recited.
+4. `npm run content:check` reports any problems, including text that doesn't match the source lines an entry names (`content/source/`).
+5. Set `reviewed: true` only once a person has checked the whole entry.
 
 ## License
 

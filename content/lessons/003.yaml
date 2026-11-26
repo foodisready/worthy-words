@@ -1,0 +1,62 @@
+# Drafts awaiting review.
+lesson:
+  id: 3
+  title_zh: 第三課：知人知面
+  title_en: "Lesson 3: Faces and Hearts"
+
+proverbs:
+  - id: zgxw-009
+    source: [9]
+    themes: [diligence-time]
+    text_trad: 運去金成鐵，時來鐵似金。讀書須用意，一字值千金。
+    text_simp: 运去金成铁，时来铁似金。读书须用意，一字值千金。
+    pinyin: yùn qù jīn chéng tiě shí lái tiě sì jīn dú shū xū yòng yì yī zì zhí qiān jīn
+    jyutping: wan6 heoi3 gam1 sing4 tit3 si4 loi4 tit3 ci5 gam1 duk6 syu1 seoi1 jung6 ji3 jat1 zi6 zik6 cin1 gam1
+    explain_cantonese: 行衰運嗰陣，金都變成鐵；時來運到，鐵都好似金咁值錢。讀書要用心，因為學識一個字，可以值千金。
+    explain_standard: 運氣走了，黃金也像廢鐵；時機到了，鐵也像黃金。讀書必須用心，學到的一個字就可能價值千金。
+    en_natural: When luck leaves, gold turns to iron; when your time comes, iron shines like gold. Read with care, for a single word can be worth a fortune.
+    en_literal: Luck gone, gold becomes iron; time come, iron resembles gold. Reading books needs attention; one character is worth a thousand gold.
+    context_note: 一字值千金 recalls 一字千金. Lü Buwei offered a thousand gold to anyone who could add or remove a single character of his book, the 《呂氏春秋》 (《史記·呂不韋列傳》).
+    reviewed: false
+
+  - id: zgxw-010
+    source: [10]
+    themes: [cultivation-speech, character-friendship]
+    text_trad: 逢人且說三分話，未可全拋一片心。
+    text_simp: 逢人且说三分话，未可全抛一片心。
+    pinyin: féng rén qiě shuō sān fēn huà wèi kě quán pāo yī piàn xīn
+    jyutping: fung4 jan4 ce2 syut3 saam1 fan1 waa6 mei6 ho2 cyun4 paau1 jat1 pin3 sam1
+    explain_cantonese: 同人講嘢，講三分就夠，唔好一見面就將成個心掏晒出嚟。
+    explain_standard: 與人交談，話只說三分，不要一下子把整顆心都交出去。
+    en_natural: When you meet people, say only part of what you think; don't hand over your whole heart at once.
+    en_literal: Meeting people, for now speak three-tenths of your words; you may not throw out your whole heart.
+    context_note: Often read as cynical. Today it reads as prudence. Trust is built step by step, especially with people you don't know yet.
+    reviewed: false
+
+  - id: zgxw-011
+    source: [11]
+    themes: [conduct-patience]
+    text_trad: 有意栽花花不發，無心插柳柳成陰。
+    text_simp: 有意栽花花不发，无心插柳柳成阴。
+    pinyin: yǒu yì zāi huā huā bù fā wú xīn chā liǔ liǔ chéng yīn
+    jyutping: jau5 ji3 zoi1 faa1 faa1 bat1 faat3 mou4 sam1 caap3 lau5 lau5 sing4 jam1
+    explain_cantonese: 刻意去種嘅花，偏偏唔開；隨手插落地嘅柳枝，反而大到成片樹蔭。好多事唔係你想點就點。
+    explain_standard: 用心栽種的花偏偏不開，隨手插下的柳枝卻長成一片綠蔭。很多事刻意追求未必得到，無心之間反而有成。
+    en_natural: The flowers you tend with care may never bloom, while a willow twig pushed carelessly into the ground grows into shade.
+    en_literal: Intending, plant flowers, and the flowers do not bloom; without intent, stick in a willow, and the willow becomes shade.
+    context_note: Usually quoted as 柳成蔭; the common edition writes 陰, with the same meaning, "shade". Willows root easily from a cut twig.
+    reviewed: false
+
+  - id: zgxw-012
+    source: [12]
+    themes: [character-friendship]
+    text_trad: 畫虎畫皮難畫骨，知人知面不知心。
+    text_simp: 画虎画皮难画骨，知人知面不知心。
+    pinyin: huà hǔ huà pí nán huà gǔ zhī rén zhī miàn bù zhī xīn
+    jyutping: waak6 fu2 waak6 pei4 naan4 waak6 gwat1 zi1 jan4 zi1 min6 bat1 zi1 sam1
+    explain_cantonese: 畫老虎，畫張皮容易，畫副骨就難；識一個人，認得佢個樣容易，知佢心諗乜就難。
+    explain_standard: 畫老虎，畫出皮毛容易，畫出骨架難；認識一個人，認得他的面孔容易，了解他的內心難。
+    en_natural: You can paint a tiger's skin but not its bones; you can know a person's face but not their heart.
+    en_literal: Painting a tiger, painting the skin, hard to paint the bones; knowing a person, knowing the face, not knowing the heart.
+    en_equivalent: You can't judge a book by its cover.
+    reviewed: false

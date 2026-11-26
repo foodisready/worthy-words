@@ -1,0 +1,61 @@
+# Drafts awaiting review.
+lesson:
+  id: 9
+  title_zh: 第九課：後浪推前浪
+  title_en: "Lesson 9: New Waves"
+
+proverbs:
+  - id: zgxw-033
+    source: [33]
+    themes: [conduct-patience]
+    text_trad: 鬧裏有錢，靜處安身。
+    text_simp: 闹里有钱，静处安身。
+    pinyin: nào lǐ yǒu qián jìng chù ān shēn
+    jyutping: naau6 leoi5 jau5 cin4 zing6 cyu3 on1 san1
+    explain_cantonese: 熱鬧嘅地方先搵到錢，清靜嘅地方先住得安樂。
+    explain_standard: 熱鬧的地方好賺錢，清靜的地方好安身。
+    en_natural: Make your money where it's busy; make your home where it's quiet.
+    en_literal: In the bustle there is money; in quiet places, settle yourself.
+    context_note: Later texts read 鬧裏掙錢 or 鬧市掙錢 ("earn money in the busy market").
+    reviewed: false
+
+  - id: zgxw-034
+    source: [34]
+    themes: [diligence-time]
+    text_trad: 來如風雨，去似微塵。
+    text_simp: 来如风雨，去似微尘。
+    pinyin: lái rú fēng yǔ qù sì wēi chén
+    jyutping: loi4 jyu4 fung1 jyu5 heoi3 ci5 mei4 can4
+    explain_cantonese: 嚟嗰陣好似一陣風雨咁轟轟烈烈，走嗰陣就好似一粒微塵咁輕。
+    explain_standard: 來的時候像一陣風雨，去的時候卻像一粒微塵。
+    en_natural: We arrive like wind and rain, and leave like specks of dust.
+    en_literal: Coming like wind and rain, going like fine dust.
+    context_note: Usually read as about a human life. Some read it as about money, which arrives in a rush and slips away unnoticed.
+    reviewed: false
+
+  - id: zgxw-035
+    source: [35]
+    themes: [diligence-time]
+    text_trad: 長江後浪推前浪，世上新人趕舊人。
+    text_simp: 长江后浪推前浪，世上新人赶旧人。
+    pinyin: cháng jiāng hòu làng tuī qián làng shì shàng xīn rén gǎn jiù rén
+    jyutping: coeng4 gong1 hau6 long6 teoi1 cin4 long6 sai3 soeng6 san1 jan4 gon2 gau6 jan4
+    explain_cantonese: 長江嘅浪，後面推住前面；世上嘅人，新一代追上舊一代。
+    explain_standard: 長江的後浪推動前浪，世上的新人趕超舊人。
+    en_natural: On the Yangtze, the waves behind push on those in front; in the world, each new generation overtakes the last.
+    en_literal: On the Long River, rear waves push front waves; in the world, new people chase old people.
+    reviewed: false
+
+  - id: zgxw-036
+    source: [36]
+    themes: [conduct-patience]
+    text_trad: 近水樓臺先得月，向陽花木早逢春。
+    text_simp: 近水楼台先得月，向阳花木早逢春。
+    pinyin: jìn shuǐ lóu tái xiān dé yuè xiàng yáng huā mù zǎo féng chūn
+    jyutping: gan6 seoi2 lau4 toi4 sin1 dak1 jyut6 hoeng3 joeng4 faa1 muk6 zou2 fung4 ceon1
+    explain_cantonese: 近水嘅樓臺，最先睇到水中嘅月光；向住太陽嘅花木，最早迎接春天。位置好，自然佔先機。
+    explain_standard: 靠近水邊的樓臺，最先看到月光；朝向陽光的花木，最早迎來春天。位置好，自然佔先機。
+    en_natural: The tower by the water sees the moon first; the trees facing the sun meet spring first.
+    en_literal: Towers near the water get the moon first; flowers and trees facing the sun meet spring early.
+    context_note: From a couplet by the Song poet Su Lin, presented to his superior Fan Zhongyan. Today 近水樓臺 often means using a convenient position to get ahead.
+    reviewed: false

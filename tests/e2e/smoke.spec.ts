@@ -67,7 +67,7 @@ test('works offline once loaded', async ({ page, context }) => {
   await context.setOffline(true);
   await page.reload();
   await expect(firstCard(page)).toContainText('昔');
-  await expect(page.locator('[data-proverb]')).toHaveCount(5);
+  await expect(page.locator('[data-proverb]')).toHaveCount(4);
 });
 
 test('a second tab still works, and says it will not save', async ({
