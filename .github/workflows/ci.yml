@@ -1,0 +1,75 @@
+name: CI and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Check content
+        run: npm run content:check
+
+      - name: Test content scripts
+        run: |
+          npm run typecheck:scripts
+          npm run test:scripts
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build for GitHub Pages
+        run: npm run build:pages
+
+      - name: Browser tests
+        run: |
+          npx playwright install --with-deps chromium
+          npx playwright test --project chromium
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: test-results/
+          retention-days: 7
+
+      - uses: actions/upload-pages-artifact@v4
+        if: github.ref == 'refs/heads/main'
+        with:
+          path: dist/worthy-words/browser
+
+  # Turn on when the site should go live: Settings → Pages → Source: GitHub
+  # Actions, then Settings → Secrets and variables → Actions → Variables, add
+  # PAGES_ENABLED = true. (Pages on a private repository needs a paid plan.)
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && vars.PAGES_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

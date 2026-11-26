@@ -1,0 +1,79 @@
+@if (lesson.isLoading()) {
+  <p class="status">載入中… Loading…</p>
+} @else if (lesson.error()) {
+  <p class="status error" role="alert">Couldn't load the lessons: {{ lesson.error()?.message }}</p>
+} @else if (lesson.value(); as current) {
+  <header class="lesson-header">
+    <h2 lang="zh-Hant">{{ current.title_zh }}</h2>
+    <p>{{ current.title_en }}</p>
+
+    <fieldset class="reading-choice">
+      <legend>Reading aid 注音</legend>
+      <label
+        ><input
+          type="radio"
+          name="reading"
+          value="jyutping"
+          [checked]="reading() === 'jyutping'"
+          (change)="reading.set('jyutping')"
+        />
+        粵拼 Jyutping</label
+      >
+      <label
+        ><input
+          type="radio"
+          name="reading"
+          value="pinyin"
+          [checked]="reading() === 'pinyin'"
+          (change)="reading.set('pinyin')"
+        />
+        拼音 Pinyin</label
+      >
+      <label
+        ><input
+          type="radio"
+          name="reading"
+          value="none"
+          [checked]="reading() === 'none'"
+          (change)="reading.set('none')"
+        />
+        None 無</label
+      >
+    </fieldset>
+  </header>
+
+  <ol class="cards">
+    @for (proverb of proverbs(); track proverb.id) {
+      <li class="card" [attr.data-proverb]="proverb.id">
+        <p class="original" lang="zh-Hant">
+          @for (c of characters(proverb); track $index) {
+            @if (c.reading && reading() !== 'none') {
+              <ruby
+                >{{ c.char }}<rt>{{ c.reading }}</rt></ruby
+              >
+            } @else {
+              {{ c.char }}
+            }
+          }
+        </p>
+        <p class="explain" lang="yue-Hant">{{ proverb.explain_cantonese }}</p>
+        <p class="english" lang="en">{{ proverb.en_natural }}</p>
+        <div class="card-footer">
+          @if (!proverb.reviewed) {
+            <span class="draft" title="This entry hasn't been reviewed yet">草稿 Draft</span>
+          }
+          <button
+            type="button"
+            class="bookmark"
+            [attr.aria-pressed]="!!proverb.bookmarked"
+            (click)="toggleBookmark(proverb)"
+          >
+            {{ proverb.bookmarked ? '★ 已收藏 Saved' : '☆ 收藏 Save' }}
+          </button>
+        </div>
+      </li>
+    }
+  </ol>
+} @else {
+  <p class="status">No lessons yet.</p>
+}

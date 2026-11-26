@@ -1,0 +1,30 @@
+<header class="masthead">
+  <h1>
+    <span class="name-zh" lang="zh-Hant">賢文</span>
+    <span class="name-en">Worthy Words</span>
+  </h1>
+</header>
+
+@if (db.error(); as error) {
+  <p class="notice" role="alert">The app couldn't start: {{ error }}</p>
+} @else if (db.info()?.storage === 'temporary') {
+  <p class="notice" role="status">
+    @if (db.info()?.storageProblem === 'in-use') {
+      Worthy Words is open in another tab or window, so nothing you do here will be saved. Close the
+      other one and reload.
+    } @else {
+      This browser can't save your progress, so it will be lost when you close the page.
+    }
+  </p>
+}
+
+<main>
+  <router-outlet />
+</main>
+
+<footer class="footer">
+  <p>
+    《增廣賢文》 · Free and open source ·
+    <a href="https://github.com/foodisready/worthy-words">GitHub</a>
+  </p>
+</footer>

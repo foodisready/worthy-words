@@ -1,0 +1,74 @@
+# Lesson 1. Sample entries for building the app: the text follows the common
+# edition and will be checked once the base edition is chosen. Explanations and
+# translations are first drafts awaiting review.
+#
+# text_simp, pinyin and jyutping are filled in by `npm run content:fill` and
+# must then be checked by hand. Never edit an entry marked reviewed: true
+# without review.
+lesson:
+  id: 1
+  title_zh: 第一課：開篇・以古鑑今
+  title_en: "Lesson 1: Opening · Learning from the Past"
+
+proverbs:
+  - id: zgxw-001
+    themes: [diligence-time]
+    text_trad: 昔時賢文，誨汝諄諄。集韻增廣，多見多聞。
+    text_simp: 昔时贤文，诲汝谆谆。集韵增广，多见多闻。
+    pinyin: xī shí xián wén huì rǔ zhūn zhūn jí yùn zēng guǎng duō jiàn duō wén
+    jyutping: sik1 si4 jin4 man4 fui3 jyu5 zeon1 zeon1 zaap6 wan5 zang1 gwong2 do1 gin3 do1 man4
+    explain_cantonese: 古代賢人寫低嘅智慧文章，好誠懇咁教導大家。前人將呢啲押韻嘅格言收集埋一齊再加以補充，希望後人睇完可以增廣見聞。
+    explain_standard: 古代賢人寫下的智慧文章，誠懇地教導大家。前人將這些押韻的格言收集起來並加以補充，希望後人藉此增廣見聞。
+    en_natural: The writings of sages of old earnestly instruct you; gathered in rhyme and expanded, so that you may see and hear more of the world.
+    en_literal: Former-times worthy writings instruct you earnestly; collected rhymes, increased and broadened, much seen, much heard.
+    reviewed: false
+
+  - id: zgxw-002
+    themes: [diligence-time]
+    text_trad: 觀今宜鑑古，無古不成今。
+    text_simp: 观今宜鉴古，无古不成今。
+    pinyin: guān jīn yí jiàn gǔ wú gǔ bù chéng jīn
+    jyutping: gun1 gam1 ji4 gaam3 gu2 mou4 gu2 bat1 sing4 gam1
+    explain_cantonese: 想睇清楚今日嘅事，就要攞過去嘅經驗嚟做借鏡；冇咗過去，就唔會有今日。
+    explain_standard: 要看清今天的事，應當借鑑過去的經驗；沒有過去，就沒有今天。
+    en_natural: To understand the present, look to the past; without the past, there would be no present.
+    en_literal: Observing the present, one should mirror the ancient; without the ancient, the present is not formed.
+    en_equivalent: Those who cannot remember the past are condemned to repeat it.
+    reviewed: false
+
+  - id: zgxw-003
+    themes: [character-friendship, conduct-patience]
+    text_trad: 知己知彼，將心比心。
+    text_simp: 知己知彼，将心比心。
+    pinyin: zhī jǐ zhī bǐ jiāng xīn bǐ xīn
+    jyutping: zi1 gei2 zi1 bei2 zoeng1 sam1 bei2 sam1
+    explain_cantonese: 要了解自己，亦要了解人哋；做咩事都用自己嘅心諗吓人哋嘅感受。
+    explain_standard: 既要了解自己，也要了解別人；凡事以自己的心去體會別人的感受。
+    en_natural: Know yourself and know others; treat their feelings as you would your own.
+    en_literal: Know oneself, know the other; take one's heart and compare it with another's heart.
+    en_equivalent: Put yourself in someone else's shoes.
+    reviewed: false
+
+  - id: zgxw-004
+    themes: [character-friendship]
+    text_trad: 酒逢知己飲，詩向會人吟。
+    text_simp: 酒逢知己饮，诗向会人吟。
+    pinyin: jiǔ féng zhī jǐ yǐn shī xiàng huì rén yín
+    jyutping: zau2 fung4 zi1 gei2 jam2 si1 hoeng3 wui5 jan4 jam4
+    explain_cantonese: 飲酒要同真正嘅知己一齊飲，吟詩要對識得欣賞嘅人吟。好嘢要同明白你嘅人分享。
+    explain_standard: 喝酒要和真正的知己一起喝，吟詩要對懂得欣賞的人吟。美好的事物要與懂你的人分享。
+    en_natural: Drink wine with a true friend; recite poetry to those who can appreciate it.
+    en_literal: Wine, meeting a bosom friend, is drunk; poems, toward an understanding person, are chanted.
+    reviewed: false
+
+  - id: zgxw-005
+    themes: [character-friendship]
+    text_trad: 相識滿天下，知心能幾人。
+    text_simp: 相识满天下，知心能几人。
+    pinyin: xiāng shí mǎn tiān xià zhī xīn néng jǐ rén
+    jyutping: soeng1 sik1 mun5 tin1 haa6 zi1 sam1 nang4 gei2 jan4
+    explain_cantonese: 識得嘅人周圍都係，但真正明白你、同你交心嘅，又有幾多個呢？
+    explain_standard: 認識的人遍布天下，但真正了解你、與你交心的，又有幾個呢？
+    en_natural: Acquaintances are everywhere, but how many truly know your heart?
+    en_literal: Acquaintances fill all under heaven; those who know the heart, how many can there be?
+    reviewed: false

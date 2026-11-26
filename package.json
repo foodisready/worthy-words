@@ -1,0 +1,48 @@
+{
+  "name": "worthy-words",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "npm run content:build && ng serve",
+    "build": "npm run content:build && ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test --watch=false",
+    "content:check": "node scripts/content/validate.ts",
+    "content:fill": "node scripts/content/fill.ts",
+    "content:build": "node scripts/content/build.ts",
+    "test:scripts": "node --test \"scripts/**/*.test.ts\"",
+    "typecheck:scripts": "tsc -p scripts",
+    "e2e": "playwright test",
+    "build:pages": "npm run content:build && ng build --base-href /worthy-words/ && node scripts/pages-404.ts"
+  },
+  "private": true,
+  "packageManager": "npm@11.17.0",
+  "dependencies": {
+    "@angular/common": "^22.3.0",
+    "@angular/compiler": "^22.3.0",
+    "@angular/core": "^22.3.0",
+    "@angular/forms": "^22.3.0",
+    "@angular/platform-browser": "^22.3.0",
+    "@angular/router": "^22.3.0",
+    "@angular/service-worker": "^22.3.0",
+    "@sqlite.org/sqlite-wasm": "^3.54.1-build1",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^22.3.0",
+    "@angular/cli": "^22.3.0",
+    "@angular/compiler-cli": "^22.3.0",
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^26.6.11",
+    "jsdom": "^31.0.0",
+    "opencc-js": "^1.4.2",
+    "pinyin-pro": "^3.29.5",
+    "prettier": "^3.8.1",
+    "to-jyutping": "^3.1.1",
+    "typescript": "~6.0.2",
+    "vitest": "^5.0.0",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.7"
+  }
+}

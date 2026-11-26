@@ -25,3 +25,6 @@ content/build/
 coverage/
 test-results/
 playwright-report/
+
+# Built from content/ by npm run content:build
+public/data/

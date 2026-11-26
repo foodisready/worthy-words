@@ -143,9 +143,10 @@ How it works:
 
 - **`@sqlite.org/sqlite-wasm`** running in a Web Worker, using the **`opfs-sahpool`** storage option. GitHub Pages can't set the COOP/COEP headers that the default `opfs` option needs; `opfs-sahpool` doesn't need them and works in current Chrome, Edge, Firefox and Safari.
 - **Two databases:**
-  - **`content.db`** (read-only): built in CI from the content source files. Cached by the service worker and replaced when its version changes.
-  - **`user.db`** (persistent, in OPFS): progress, streaks, bookmarks, notes, settings, the BYOK key and AI usage estimate. Versioned migrations.
-  - `content.db` is attached to `user.db` so queries can join them.
+  - **`content.db`** (read-only): built in CI from the content source files. Cached by the service worker, replaced when its version changes, and opened read-only in memory at start-up.
+  - **`user.db`** (persistent, in OPFS): progress, streaks, bookmarks, notes, settings, the BYOK key and AI usage estimate. Versioned migrations (`src/app/data/user-migrations.ts`).
+  - `user.db` is attached to `content.db` as `user`, so queries can join them.
+- **Fallbacks:** if OPFS is missing, or another tab already holds `user.db`, the app keeps working with temporary in-memory storage and says that nothing will be saved.
 - Call `navigator.storage.persist()` on first run. Safari may clear storage for sites not visited in 7 days; installed PWAs are exempt, so the app encourages installing.
 - **Search:** SQLite's full-text search doesn't split Chinese into words, and its trigram option can't match queries under 3 characters. With about 400 couplets, `LIKE` over prepared columns (traditional, simplified, toneless pinyin, toneless Jyutping, English) is instant.
 
@@ -179,6 +180,7 @@ CREATE TABLE proverbs (
   en_equivalent     TEXT,               -- equivalent English idiom, if any
   context_note      TEXT,               -- origins, variants
   insight           TEXT,               -- JSON: scenarios, misreadings, related, questions
+  reviewed          INTEGER NOT NULL,   -- 1 once a person has checked the entry
   search_text       TEXT NOT NULL       -- prepared at build time for LIKE search
 );
 

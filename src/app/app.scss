@@ -1,0 +1,47 @@
+:host {
+  display: block;
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+}
+
+.masthead {
+  padding-top: 1.5rem;
+  h1 {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+}
+
+.name-zh {
+  font-family: var(--font-serif-zh);
+  font-size: 2.5rem;
+  color: var(--accent);
+}
+
+.name-en {
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.notice {
+  margin: 1rem 0 0;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: var(--notice);
+  font-size: 0.9rem;
+}
+
+.footer {
+  margin-top: 3rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  a {
+    color: inherit;
+  }
+}

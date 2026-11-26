@@ -1,0 +1,13 @@
+# Themes a proverb can belong to. A proverb may have several.
+- id: conduct-patience
+  name_zh: 處世與忍讓
+  name_en: Conduct & Patience
+- id: character-friendship
+  name_zh: 識人與交友
+  name_en: Judging Character & Friendship
+- id: diligence-time
+  name_zh: 勸學與惜時
+  name_en: Diligence & Cherishing Time
+- id: cultivation-speech
+  name_zh: 修身與言語
+  name_en: Self-Cultivation & Speech
