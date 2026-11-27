@@ -4,14 +4,21 @@
 // yī and 不 is bù even where speech changes the tone (變調), and there are no
 // neutral tones, because the text is classical.
 //
-// Jyutping: literary readings (文讀), as classical text is recited in
-// Cantonese. 行 is hang4, not haang4; 生 is sang1, not saang1.
+// Jyutping: as the words are said in everyday Hong Kong Cantonese, decided
+// word by word: 有錢 cin2 and 行路 haang4 (colloquial), but 錢財 cin4 and
+// 成陰 sing4, because speech itself uses the literary reading there.
 import * as OpenCC from 'opencc-js';
 import { pinyin } from 'pinyin-pro';
 import ToJyutping from 'to-jyutping';
 import { hanChars } from './load.ts';
 
-/** Colloquial (白讀) → literary (文讀) Jyutping, used when reciting classical text. */
+/**
+ * Characters with a colloquial (白讀) and a literary (文讀) Jyutping reading,
+ * colloquial → literary. Neither is chosen automatically: entries are read
+ * the way the words are said in everyday Cantonese (有錢 cin2, 行路 haang4),
+ * which is literary where speech itself is (錢財 cin4, 成功 sing4). The review
+ * report lists every one of these characters for a person to check.
+ */
 // prettier-ignore
 export const LITERARY: Record<string, Record<string, string>> = {
   行: { haang4: 'hang4' }, 生: { saang1: 'sang1' }, 命: { meng6: 'ming6' },
@@ -43,7 +50,7 @@ export function generateReadings(trad: string) {
     .map(([char, reading]) => {
       const first = reading?.split(' ')[0];
       if (!first) return `?${char}`;
-      return LITERARY[char]?.[first] ?? first;
+      return first;
     })
     .join(' ');
   return { text_simp: simp, pinyin: py, jyutping: jp };
@@ -61,7 +68,9 @@ export interface Sense {
  */
 // prettier-ignore
 export const POLYPHONES: Record<string, Sense[]> = {
-  行: [{ pinyin: 'xíng', jyutping: 'hang4', meaning: 'go, walk, do' }, { pinyin: 'háng', jyutping: 'hong4', meaning: 'row, trade' }, { pinyin: 'xìng', jyutping: 'hang6', meaning: 'conduct (德行, 品行)' }],
+  行: [
+    { pinyin: 'xíng', jyutping: 'haang4', meaning: 'walk, travel (colloquial)' },{ pinyin: 'xíng', jyutping: 'hang4', meaning: 'go, walk, do' }, { pinyin: 'háng', jyutping: 'hong4', meaning: 'row, trade' }, { pinyin: 'xìng', jyutping: 'hang6', meaning: 'conduct (德行, 品行)' }],
+  阿: [{ pinyin: 'ā', jyutping: 'aa3', meaning: 'prefix; in names and loanwords (阿媽, 阿拉伯)' }, { pinyin: 'ē', jyutping: 'o1', meaning: 'flatter; in older words (阿諛, 阿膠, 阿彌陀佛)' }],
   長: [{ pinyin: 'cháng', jyutping: 'coeng4', meaning: 'long' }, { pinyin: 'zhǎng', jyutping: 'zoeng2', meaning: 'grow, elder, head' }],
   重: [{ pinyin: 'zhòng', jyutping: 'zung6', meaning: 'heavy, important' }, { pinyin: 'chóng', jyutping: 'cung4', meaning: 'again, layered' }],
   為: [{ pinyin: 'wéi', jyutping: 'wai4', meaning: 'be, act as, do' }, { pinyin: 'wèi', jyutping: 'wai6', meaning: 'for, because of' }],
@@ -79,7 +88,7 @@ export const POLYPHONES: Record<string, Sense[]> = {
   傳: [{ pinyin: 'chuán', jyutping: 'cyun4', meaning: 'pass on, spread' }, { pinyin: 'zhuàn', jyutping: 'zyun6', meaning: 'biography, commentary' }],
   數: [{ pinyin: 'shù', jyutping: 'sou3', meaning: 'number' }, { pinyin: 'shǔ', jyutping: 'sou2', meaning: 'count' }, { pinyin: 'shuò', jyutping: 'sok3', meaning: 'often' }],
   處: [{ pinyin: 'chù', jyutping: 'cyu3', meaning: 'place' }, { pinyin: 'chǔ', jyutping: 'cyu5', meaning: 'dwell; deal with' }],
-  教: [{ pinyin: 'jiào', jyutping: 'gaau3', meaning: 'teaching; cause, let' }, { pinyin: 'jiāo', jyutping: 'gaau3', meaning: 'teach' }],
+  教: [{ pinyin: 'jiāo', jyutping: 'gaau1', meaning: 'cause, let (使, 令); level tone in verse' }, { pinyin: 'jiāo', jyutping: 'gaau3', meaning: 'teach (教人, 教書)' }, { pinyin: 'jiào', jyutping: 'gaau3', meaning: 'teaching, religion (教育, 宗教)' }],
   將: [{ pinyin: 'jiāng', jyutping: 'zoeng1', meaning: 'take; will' }, { pinyin: 'jiàng', jyutping: 'zoeng3', meaning: 'general' }],
   應: [{ pinyin: 'yīng', jyutping: 'jing1', meaning: 'should' }, { pinyin: 'yìng', jyutping: 'jing3', meaning: 'respond' }],
   當: [{ pinyin: 'dāng', jyutping: 'dong1', meaning: 'serve as; at (the time)' }, { pinyin: 'dàng', jyutping: 'dong3', meaning: 'proper; treat as' }],

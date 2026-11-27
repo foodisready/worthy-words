@@ -1,5 +1,6 @@
 // Prints a review list of readings for entries not yet reviewed: every
-// character whose reading depends on meaning, every literary (文讀) reading,
+// character whose reading depends on meaning, every character with both a
+// colloquial (白讀) and a literary (文讀) reading,
 // and every reading changed by hand from what the generator gives.
 // Usage: npm run content:readings [-- --all] > review.md
 import { hanChars, loadContent, syllables } from './load.ts';
@@ -62,7 +63,9 @@ for (const { lesson, proverbs } of content.lessons) {
       const literary = LITERARY[c];
       if (literary && Object.values(literary).includes(jp[i])) {
         const colloquial = Object.keys(literary).find((k) => literary[k] === jp[i]);
-        notes.push(`文讀 (colloquial ${colloquial})`);
+        notes.push(`文讀 literary (colloquial ${colloquial})`);
+      } else if (literary?.[jp[i]]) {
+        notes.push(`白讀 colloquial (literary ${literary[jp[i]]})`);
       }
       if (py[i] !== genPy[i] || jp[i] !== genJp[i]) {
         notes.push(`edited by hand (generator: ${genPy[i]} / ${genJp[i]})`);
