@@ -17,6 +17,7 @@ What was decided, when and why, so the reasoning isn't lost between working sess
 - **Verdicts are tied to what the reviewer saw.** Each verdict carries a fingerprint of the entry; if the entry changes later, the verdict no longer counts and the entry needs fresh ✓s.
 - **Credit:** everyone who gave any verdict on an entry (✓, ✎ or ?) is credited in `reviewed_by`, shown on the card and in Settings → About. Each reviewer chooses how: initials suggested, full name, or none.
   _Why:_ the site and its history are public and permanent, so each person decides how visible they are; finding a mistake deserves credit as much as approving the fix.
+- **Editing an approved entry sends it back for review** (`reviewed: false`, credits removed), so the approval always matches what readers see.
 - **Reviewers' files stay private.** Submissions are kept in `content/review/inbox/`, which is not in git (names and comments).
 - **Suggested split:** each lesson gets the owner, two Cantonese reviewers and one Mandarin reviewer, rotating, rather than everyone reviewing everything.
 
