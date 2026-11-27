@@ -60,6 +60,7 @@ jobs:
   # Turn on when the site should go live: Settings → Pages → Source: GitHub
   # Actions, then Settings → Secrets and variables → Actions → Variables, add
   # PAGES_ENABLED = true. (Pages on a private repository needs a paid plan.)
+  # Live since 2026-11-26 at https://foodisready.github.io/worthy-words/
   deploy:
     needs: build
     if: github.ref == 'refs/heads/main' && vars.PAGES_ENABLED == 'true'

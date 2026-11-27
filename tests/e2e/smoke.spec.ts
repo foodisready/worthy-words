@@ -171,10 +171,22 @@ test('works offline once loaded', async ({ page, context }) => {
       );
     }
   });
+  // The service worker has downloaded content.db and the SQLite wasm (its
+  // "content" group). Over a real network this takes a few seconds.
   await expect
-    .poll(async () => page.evaluate(async () => (await caches.keys()).length), { timeout: 30_000 })
-    .toBeGreaterThan(0);
-  await page.waitForTimeout(1500);
+    .poll(
+      async () =>
+        page.evaluate(async () => {
+          for (const name of await caches.keys()) {
+            if (name.endsWith(':content:cache'))
+              return (await (await caches.open(name)).keys()).length;
+          }
+          return 0;
+        }),
+      { timeout: 60_000 },
+    )
+    .toBe(2);
+  await page.waitForTimeout(1000);
 
   await context.setOffline(true);
   await page.reload();

@@ -7,7 +7,9 @@ A free, open-source app for learning 《增廣賢文》 (*Zeng Guang Xian Wen*),
 - Works offline once installed, on phones and computers
 - No account and no ads. Your progress stays on your device
 
-> Work in progress. See the [product plan](docs/Zeng_Guang_Xian_Wen_PWA_PRD.md).
+**Try it: <https://foodisready.github.io/worthy-words/>**
+
+> Work in progress: lesson content is still being reviewed, and entries marked 草稿 Draft haven't been checked yet. See the [product plan](docs/Zeng_Guang_Xian_Wen_PWA_PRD.md).
 
 ## Development
 
