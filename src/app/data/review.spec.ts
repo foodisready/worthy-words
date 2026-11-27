@@ -100,6 +100,12 @@ describe('review text', () => {
     expect(parseReview(file)).toEqual({ reviewer, entries });
     expect(() => parseReview('{"format":"worthy-words-backup"}')).toThrow(/isn’t a Worthy Words/);
     expect(() => parseReview('hello')).toThrow(/No review entries/);
+    // A reviewer id that could leave the inbox folder is dropped.
+    const sneaky = JSON.stringify({
+      ...JSON.parse(file),
+      reviewer: { ...reviewer, id: '../../x' },
+    });
+    expect(parseReview(sneaky).reviewer).toBeUndefined();
   });
 });
 

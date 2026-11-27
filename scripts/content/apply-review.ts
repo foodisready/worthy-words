@@ -16,9 +16,10 @@
 //   npm run content:apply-review -- [--dry-run] [--need N] [files...]
 //   pbpaste | npm run content:apply-review -- -               (add pasted text)
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve, sep } from 'node:path';
 import { isMap, isSeq, parseDocument, type YAMLMap } from 'yaml';
 import {
+  REVIEWER_ID,
   VERDICT_MARK,
   fingerprint,
   parseReview,
@@ -75,10 +76,13 @@ for (const file of files) {
   submissions.push(s);
   if (!dryRun) {
     const stamp = new Date().toISOString().replace(/[:.]/g, '-');
-    writeFileSync(
-      join(INBOX, `${stamp}-${s.reviewer!.id}.json`),
-      JSON.stringify(s, null, 2) + '\n',
-    );
+    const id = s.reviewer!.id;
+    const target = resolve(INBOX, `${stamp}-${id}.json`);
+    if (!REVIEWER_ID.test(id) || !target.startsWith(resolve(INBOX) + sep)) {
+      console.error(`${file}: the reviewer id "${id}" isn't valid.`);
+      process.exit(1);
+    }
+    writeFileSync(target, JSON.stringify(s, null, 2) + '\n');
   }
   console.log(
     `${dryRun ? 'Read' : 'Added'} ${s.entries.length} verdicts from ${s.reviewer!.name || s.reviewer!.id}.`,

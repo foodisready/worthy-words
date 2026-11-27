@@ -38,6 +38,9 @@ export interface Submission {
 
 export const REVIEW_FORMAT = 'worthy-words-review';
 
+/** Reviewer ids are short and plain (they end up in file names). */
+export const REVIEWER_ID = /^[0-9a-z]{1,32}$/;
+
 export const VERDICT_MARK: Record<Verdict, string> = { ok: '✓', change: '✎', unsure: '?' };
 
 export const FOCUS_LABEL: Record<Focus, string> = {
@@ -148,7 +151,7 @@ export function parseReview(input: string): Submission {
     }
     const r = data.reviewer;
     const reviewer =
-      r && typeof r.id === 'string' && r.id
+      r && typeof r.id === 'string' && REVIEWER_ID.test(r.id)
         ? {
             id: r.id,
             name: String(r.name ?? ''),
@@ -163,7 +166,7 @@ export function parseReview(input: string): Submission {
   const entries: ReviewEntry[] = [];
   let reviewer: Reviewer | undefined;
   for (const line of trimmed.split(/\r?\n/)) {
-    const who = /^\s*Reviewer: (.*) \[([0-9a-z]+)\] · credit: (.*) · checking: (\w+)\s*$/.exec(
+    const who = /^\s*Reviewer: (.*) \[([0-9a-z]{1,32})\] · credit: (.*) · checking: (\w+)\s*$/.exec(
       line,
     );
     if (who) {
