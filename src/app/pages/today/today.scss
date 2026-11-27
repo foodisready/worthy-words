@@ -1,0 +1,68 @@
+.welcome {
+  margin-top: 1.5rem;
+  border-top: 3px solid var(--accent);
+  h2 {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-serif-zh);
+  }
+}
+
+.stats {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem 1rem;
+  .progress-bar {
+    grid-column: 1 / -1;
+  }
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  .value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    small {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--muted);
+    }
+  }
+  .label {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+}
+
+.lesson-intro {
+  margin-bottom: 1rem;
+  h3 {
+    margin: 0;
+    font-family: var(--font-serif-zh);
+    font-size: 1.25rem;
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+  .subtitle {
+    margin: 0.2rem 0 0;
+    color: var(--muted);
+  }
+  app-display-bar {
+    display: block;
+    margin-top: 0.75rem;
+  }
+}
+
+.done {
+  border-top: 3px solid var(--accent);
+}
+
+.finish {
+  justify-content: center;
+  margin-top: 1.5rem;
+}

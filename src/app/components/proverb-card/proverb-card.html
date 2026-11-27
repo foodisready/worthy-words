@@ -1,0 +1,106 @@
+@let p = proverb();
+<article class="card" [class.done]="p.completed">
+  <p class="original" [attr.lang]="settings().script === 'simp' ? 'zh-Hans' : 'zh-Hant'">
+    @for (clause of characters(); track $index) {
+      <span class="clause">
+        @for (c of clause; track $index) {
+          @if (c.reading && settings().reading !== 'none') {
+            <ruby
+              >{{ c.char }}<rt>{{ c.reading }}</rt></ruby
+            >
+          } @else {
+            <span class="char">{{ c.char }}</span>
+          }
+        }
+      </span>
+    }
+  </p>
+
+  <p class="explain" [attr.lang]="explanation().lang">{{ explanation().text }}</p>
+  <p class="english" lang="en">{{ p.en_natural }}</p>
+  @if (settings().showLiteral && p.en_literal) {
+    <p class="literal" lang="en"><span class="label">Word for word</span> {{ p.en_literal }}</p>
+  }
+
+  <details class="more">
+    <summary>更多 More</summary>
+    <dl>
+      <dt>{{ otherExplanation().label }}</dt>
+      <dd [attr.lang]="otherExplanation().lang">{{ otherExplanation().text }}</dd>
+      @if (p.en_literal && !settings().showLiteral) {
+        <dt>Word for word 直譯</dt>
+        <dd lang="en">{{ p.en_literal }}</dd>
+      }
+      @if (p.en_equivalent) {
+        <dt>English saying 英文諺語</dt>
+        <dd lang="en">{{ p.en_equivalent }}</dd>
+      }
+      @if (p.context_note) {
+        <dt>Notes 註</dt>
+        <dd lang="en">{{ p.context_note }}</dd>
+      }
+      @if (themes().length) {
+        <dt>Themes 主題</dt>
+        <dd class="tags">
+          @for (t of themes(); track t.id) {
+            <a class="tag" [routerLink]="['/themes', t.id]"
+              ><span lang="zh-Hant">{{ t.name_zh }}</span> {{ t.name_en }}</a
+            >
+          }
+        </dd>
+      }
+      @if (showLesson()) {
+        <dt>Lesson 課</dt>
+        <dd>
+          <a [routerLink]="['/lessons', p.lesson_id]" [fragment]="p.id"
+            >第 {{ p.lesson_id }} 課 · Lesson {{ p.lesson_id }}</a
+          >
+        </dd>
+      }
+    </dl>
+  </details>
+
+  @if (editingNote()) {
+    <form class="note-editor" (submit)="$event.preventDefault(); saveNote(noteInput.value)">
+      <label [for]="'note-' + p.id">My note 筆記</label>
+      <textarea #noteInput [id]="'note-' + p.id" rows="3" [value]="note()"></textarea>
+      @if (noteError(); as error) {
+        <p class="error" role="alert">Couldn't save the note: {{ error }}</p>
+      }
+      <div class="row">
+        <button type="button" class="text-button" (click)="editingNote.set(false)">
+          Cancel 取消
+        </button>
+        <button type="submit" class="pill primary">Save note 儲存</button>
+      </div>
+    </form>
+  } @else if (note()) {
+    <blockquote class="note">
+      <span class="label">My note 筆記</span>
+      <span class="note-body">{{ note() }}</span>
+    </blockquote>
+  }
+
+  <footer class="card-footer">
+    @if (!p.reviewed) {
+      <span class="badge draft" title="This entry hasn't been reviewed yet">草稿 Draft</span>
+    }
+    @if (p.completed) {
+      <span class="badge learned" title="You have completed this proverb">✓ 已學 Learned</span>
+    }
+    <span class="spacer"></span>
+    @if (!editingNote()) {
+      <button type="button" class="pill" (click)="editingNote.set(true)">
+        {{ note() ? '✎ 改筆記 Edit note' : '✎ 筆記 Note' }}
+      </button>
+    }
+    <button
+      type="button"
+      class="pill bookmark"
+      [attr.aria-pressed]="bookmarked()"
+      (click)="toggleBookmark()"
+    >
+      {{ bookmarked() ? '★ 已收藏 Saved' : '☆ 收藏 Save' }}
+    </button>
+  </footer>
+</article>

@@ -1,9 +1,27 @@
+<a class="skip" href="#main">Skip to content</a>
 <header class="masthead">
-  <h1>
-    <span class="name-zh" lang="zh-Hant">賢文</span>
-    <span class="name-en">Worthy Words</span>
-  </h1>
+  <a routerLink="/" class="home-link">
+    <h1>
+      <span class="name-zh" lang="zh-Hant">賢文</span>
+      <span class="name-en">Worthy Words</span>
+    </h1>
+  </a>
 </header>
+
+<nav class="nav" aria-label="Main">
+  @for (item of nav; track item.path) {
+    <a
+      [routerLink]="item.path"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: item.exact }"
+      ariaCurrentWhenActive="page"
+    >
+      <span class="icon" aria-hidden="true" lang="zh-Hant">{{ item.icon }}</span>
+      <span class="zh" lang="zh-Hant">{{ item.zh }}</span>
+      <span class="en">{{ item.en }}</span>
+    </a>
+  }
+</nav>
 
 @if (db.error(); as error) {
   <p class="notice" role="alert">The app couldn't start: {{ error }}</p>
@@ -18,7 +36,7 @@
   </p>
 }
 
-<main>
+<main id="main" tabindex="-1">
   <router-outlet />
 </main>
 

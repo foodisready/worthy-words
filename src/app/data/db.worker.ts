@@ -120,6 +120,14 @@ async function handle(request: DbRequest): Promise<unknown> {
       database.exec({ sql: request.sql, bind: request.bind as SqlValue[] | undefined });
       return { changes: database.changes() };
     }
+    case 'batch':
+      // All or nothing: one transaction for every statement.
+      requireDb().transaction((tx) => {
+        for (const { sql, bind } of request.statements) {
+          tx.exec({ sql, bind: bind as SqlValue[] | undefined });
+        }
+      });
+      return null;
   }
 }
 

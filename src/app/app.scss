@@ -5,28 +5,143 @@
   padding: 0 1rem 2rem;
 }
 
+.skip {
+  position: absolute;
+  left: -999px;
+  &:focus {
+    left: 1rem;
+    top: 1rem;
+    z-index: 10;
+    background: var(--surface);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+  }
+}
+
 .masthead {
   padding-top: 1.5rem;
   h1 {
     margin: 0;
     display: flex;
-    flex-direction: column;
+    align-items: baseline;
+    gap: 0.75rem;
     line-height: 1.1;
   }
 }
 
+.home-link {
+  text-decoration: none;
+}
+
 .name-zh {
   font-family: var(--font-serif-zh);
-  font-size: 2.5rem;
+  font-size: 2.25rem;
   color: var(--accent);
 }
 
 .name-en {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+// A tab bar along the bottom on phones, a row of links under the name on
+// wider screens.
+.nav {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 5;
+  display: flex;
+  justify-content: space-around;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  padding: 0.25rem 0.25rem calc(0.25rem + env(safe-area-inset-bottom));
+
+  a {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.05rem;
+    padding: 0.3rem 0;
+    min-height: 2.75rem;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.7rem;
+    border-radius: 8px;
+
+    &.active {
+      color: var(--accent);
+      .icon {
+        background: var(--accent);
+        color: var(--on-accent);
+      }
+    }
+  }
+
+  .icon {
+    font-family: var(--font-serif-zh);
+    font-size: 1rem;
+    width: 1.7rem;
+    height: 1.7rem;
+    display: grid;
+    place-items: center;
+    border-radius: 6px;
+  }
+  .zh {
+    font-size: 0.8rem;
+  }
+  .en {
+    display: none;
+  }
+}
+
+main {
+  outline: none;
+  // Room for the bottom tab bar.
+  padding-bottom: 4.5rem;
+}
+
+@media (min-width: 40rem) {
+  .nav {
+    position: static;
+    justify-content: flex-start;
+    gap: 0.25rem;
+    margin-top: 1rem;
+    padding: 0;
+    background: none;
+    border-top: 0;
+    border-bottom: 1px solid var(--line);
+
+    a {
+      flex: none;
+      flex-direction: row;
+      gap: 0.35rem;
+      padding: 0.5rem 0.75rem;
+      min-height: 0;
+      font-size: 0.9rem;
+      border-radius: 0;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      &.active {
+        border-bottom-color: var(--accent);
+      }
+    }
+    .icon {
+      display: none;
+    }
+    .zh {
+      font-size: 0.95rem;
+    }
+    .en {
+      display: inline;
+    }
+  }
+  main {
+    padding-bottom: 0;
+  }
 }
 
 .notice {

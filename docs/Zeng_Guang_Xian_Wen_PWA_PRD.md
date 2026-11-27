@@ -83,7 +83,7 @@ Bookmark proverbs and attach personal reflections, stored on the device.
 
 ### 2.5 Data ownership
 
-- **Export my data:** downloads the user's database file (progress, bookmarks, notes, settings; the API key is left out).
+- **Export my data:** downloads the user's data as a JSON file (progress, study days, bookmarks, notes, settings; the API key is left out). **Import** merges a file into what's already saved, so nothing is lost.
 - **Import:** restores it on another device or browser. This is how people move devices without accounts.
 
 ---

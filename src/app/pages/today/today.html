@@ -1,0 +1,130 @@
+@if (settingsService.loaded() && !settings().welcomed) {
+  <section class="panel welcome" aria-labelledby="welcome-title">
+    <h2 id="welcome-title">歡迎 Welcome</h2>
+    <p>
+      <span lang="zh-Hant">《增廣賢文》</span> is a book of Chinese proverbs that children have
+      memorised for over four hundred years: short, rhyming lines on friendship, patience, hard work
+      and how people really behave. Most of it still rings true today.
+    </p>
+    <p>
+      Each day you get one short lesson of four proverbs, with Cantonese and Mandarin readings, a
+      plain explanation and an English translation. Choose how you'd like to read them (you can
+      change this any time):
+    </p>
+    <app-display-bar />
+    <div class="actions">
+      <button type="button" class="pill primary" (click)="settingsService.set('welcomed', true)">
+        開始 Start
+      </button>
+      <a class="pill" routerLink="/themes" (click)="settingsService.set('welcomed', true)"
+        >Browse by theme 按主題瀏覽</a
+      >
+    </div>
+  </section>
+}
+
+@if (summary.value(); as s) {
+  <section class="stats" aria-label="Your progress 進度">
+    <div class="stat">
+      <span class="value" data-stat="streak">{{ s.streak }}</span>
+      <span class="label"><span lang="zh-Hant">連續日數</span> Day streak</span>
+    </div>
+    <div class="stat">
+      <span class="value" data-stat="completed"
+        >{{ s.completed }}<small>/{{ s.total }}</small></span
+      >
+      <span class="label"><span lang="zh-Hant">已學</span> Learned</span>
+    </div>
+    <div class="stat">
+      <span class="value">{{ s.bestStreak }}</span>
+      <span class="label"><span lang="zh-Hant">最長</span> Best streak</span>
+    </div>
+    <div
+      class="progress-bar"
+      role="progressbar"
+      aria-label="Book progress"
+      [attr.aria-valuenow]="percent()"
+      aria-valuemin="0"
+      aria-valuemax="100"
+    >
+      <span [style.width.%]="percent()"></span>
+    </div>
+  </section>
+} @else if (summary.error()) {
+  <p class="status error" role="alert">
+    Couldn't load your progress: {{ summary.error()?.message }}
+  </p>
+}
+
+@if (todaysProverb.value(); as p) {
+  <h2 class="section-title" id="todays-proverb">
+    <span lang="zh-Hant">今日金句</span> <span class="en">Today's proverb</span>
+  </h2>
+  <app-proverb-card [proverb]="p" [showLesson]="true" />
+}
+
+<h2 class="section-title" id="daily-dose">
+  <span lang="zh-Hant">今日一課</span> <span class="en">Today's lesson</span>
+</h2>
+
+@if (summary.value(); as s) {
+  @if (s.nextLessonId === undefined) {
+    <section class="panel">
+      <h3>全書讀完 You've finished the book!</h3>
+      <p>
+        Every proverb is marked as learned. Revisit your favourites in
+        <a routerLink="/saved">Saved</a>, or browse <a routerLink="/themes">by theme</a>.
+      </p>
+    </section>
+  } @else if (restingToday()) {
+    <section class="panel done" role="status">
+      <h3>✓ 今日完成 Done for today</h3>
+      <p>
+        @if (s.streak > 1) {
+          That's {{ s.streak }} days in a row. 好嘢！
+        } @else {
+          Well done. Come back tomorrow to start a streak.
+        }
+      </p>
+      <div class="actions">
+        <button type="button" class="pill" (click)="continuing.set(true)">
+          Continue to the next lesson 下一課
+        </button>
+        <a class="pill" routerLink="/settings" fragment="reminder">Daily reminder 每日提醒</a>
+      </div>
+    </section>
+  } @else if (lesson.value(); as current) {
+    <div class="lesson-intro">
+      <h3>
+        <a [routerLink]="['/lessons', current.lesson?.id]" lang="zh-Hant">{{
+          current.lesson?.title_zh
+        }}</a>
+      </h3>
+      <p class="subtitle">{{ current.lesson?.title_en }}</p>
+      @if (settings().welcomed) {
+        <app-display-bar />
+      }
+    </div>
+    <ol class="stack" aria-labelledby="daily-dose">
+      @for (p of current.proverbs; track p.id) {
+        <li><app-proverb-card [proverb]="p" /></li>
+      }
+    </ol>
+    <div class="actions finish">
+      <button
+        type="button"
+        class="pill primary"
+        [disabled]="completing()"
+        (click)="completeLesson()"
+      >
+        ✓ 完成今日一課 Complete today's lesson
+      </button>
+    </div>
+  } @else if (lesson.isLoading()) {
+    <p class="status">載入中… Loading…</p>
+  } @else if (lesson.error()) {
+    <p class="status error" role="alert">Couldn't load the lesson: {{ lesson.error()?.message }}</p>
+  }
+} @else if (summary.isLoading()) {
+  <p class="status">載入中… Loading…</p>
+}

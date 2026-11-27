@@ -1,7 +1,42 @@
 import { Routes } from '@angular/router';
-import { HomePage } from './pages/home/home';
+
+const name = '賢文 Worthy Words';
 
 export const routes: Routes = [
-  { path: '', component: HomePage },
+  {
+    path: '',
+    title: `${name}: 增廣賢文 for everyday life`,
+    loadComponent: () => import('./pages/today/today').then((m) => m.TodayPage),
+  },
+  {
+    path: 'lessons',
+    title: `課文 Lessons · ${name}`,
+    loadComponent: () => import('./pages/lessons/lessons').then((m) => m.LessonsPage),
+  },
+  {
+    path: 'lessons/:id',
+    title: `課文 Lesson · ${name}`,
+    loadComponent: () => import('./pages/lesson/lesson').then((m) => m.LessonPage),
+  },
+  {
+    path: 'themes',
+    title: `主題 Themes · ${name}`,
+    loadComponent: () => import('./pages/themes/themes').then((m) => m.ThemesPage),
+  },
+  {
+    path: 'themes/:id',
+    title: `主題 Theme · ${name}`,
+    loadComponent: () => import('./pages/theme/theme').then((m) => m.ThemePage),
+  },
+  {
+    path: 'saved',
+    title: `收藏 Saved · ${name}`,
+    loadComponent: () => import('./pages/saved/saved').then((m) => m.SavedPage),
+  },
+  {
+    path: 'settings',
+    title: `設定 Settings · ${name}`,
+    loadComponent: () => import('./pages/settings/settings').then((m) => m.SettingsPage),
+  },
   { path: '**', redirectTo: '' },
 ];

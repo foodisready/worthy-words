@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import type { DbInfo, DbRequest, DbResponse, Row, SqlValue } from './db-protocol';
+import type { DbInfo, DbRequest, DbResponse, Row, SqlValue, Statement } from './db-protocol';
 
 type Pending = { resolve: (value: unknown) => void; reject: (reason: Error) => void };
 type Request = DbRequest extends infer R
@@ -35,6 +35,12 @@ export class DbService {
   async exec(sql: string, bind?: SqlValue[]): Promise<{ changes: number }> {
     await this.open();
     return (await this.send({ method: 'exec', sql, bind })) as { changes: number };
+  }
+
+  /** Runs the statements in one transaction: all of them, or none if one fails. */
+  async batch(statements: Statement[]): Promise<void> {
+    await this.open();
+    await this.send({ method: 'batch', statements });
   }
 
   private async start(): Promise<DbInfo> {

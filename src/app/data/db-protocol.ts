@@ -23,7 +23,14 @@ export interface DbInfo {
 export type DbRequest =
   | { id: number; method: 'open'; contentUrl: string; wasmUrl: string }
   | { id: number; method: 'query'; sql: string; bind?: SqlValue[] }
-  | { id: number; method: 'exec'; sql: string; bind?: SqlValue[] };
+  | { id: number; method: 'exec'; sql: string; bind?: SqlValue[] }
+  | { id: number; method: 'batch'; statements: Statement[] };
+
+/** One SQL statement and its values. */
+export interface Statement {
+  sql: string;
+  bind?: SqlValue[];
+}
 
 export type DbResponse =
   { id: number; ok: true; result: unknown } | { id: number; ok: false; error: string };

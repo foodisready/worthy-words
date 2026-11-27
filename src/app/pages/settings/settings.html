@@ -1,0 +1,142 @@
+<header class="page-header">
+  <h2 lang="zh-Hant">設定</h2>
+  <p class="subtitle">Settings</p>
+</header>
+
+<section class="panel" aria-labelledby="display-title">
+  <h3 id="display-title">顯示 Display</h3>
+
+  <fieldset>
+    <legend>Reading aid 注音</legend>
+    @for (o of readingOptions; track o.value) {
+      <label
+        ><input
+          type="radio"
+          name="reading"
+          [checked]="settings().reading === o.value"
+          (change)="service.set('reading', o.value)"
+        />
+        {{ o.label }}</label
+      >
+    }
+  </fieldset>
+
+  <fieldset>
+    <legend>Characters 字體</legend>
+    @for (o of scriptOptions; track o.value) {
+      <label
+        ><input
+          type="radio"
+          name="script"
+          [checked]="settings().script === o.value"
+          (change)="service.set('script', o.value)"
+        />
+        {{ o.label }}</label
+      >
+    }
+  </fieldset>
+
+  <fieldset>
+    <legend>Explanation 白話解釋</legend>
+    @for (o of explanationOptions; track o.value) {
+      <label
+        ><input
+          type="radio"
+          name="explanation"
+          [checked]="settings().explanation === o.value"
+          (change)="service.set('explanation', o.value)"
+        />
+        {{ o.label }}</label
+      >
+    }
+  </fieldset>
+
+  <fieldset>
+    <legend>Text size 字號</legend>
+    @for (o of sizeOptions; track o.value) {
+      <label
+        ><input
+          type="radio"
+          name="size"
+          [checked]="settings().textSize === o.value"
+          (change)="service.set('textSize', o.value)"
+        />
+        {{ o.label }}</label
+      >
+    }
+  </fieldset>
+
+  <label class="check"
+    ><input
+      type="checkbox"
+      [checked]="settings().showLiteral"
+      (change)="service.set('showLiteral', $any($event.target).checked)"
+    />
+    Always show the word-for-word English 顯示直譯</label
+  >
+</section>
+
+<section class="panel" id="reminder" aria-labelledby="reminder-title">
+  <h3 id="reminder-title">每日提醒 Daily reminder</h3>
+  <p>
+    Add a repeating event to your calendar (Apple, Google, Outlook…). It reminds you each day and
+    links back here. No account, no notifications to allow.
+  </p>
+  <div class="row">
+    <label for="reminder-time">Time 時間</label>
+    <input
+      id="reminder-time"
+      type="time"
+      [value]="settings().reminderTime"
+      (change)="setReminderTime($any($event.target).value)"
+    />
+    <button type="button" class="pill primary" (click)="downloadReminder()">
+      Add to my calendar 加入日曆
+    </button>
+  </div>
+</section>
+
+<section class="panel" aria-labelledby="data-title">
+  <h3 id="data-title">我的資料 Your data</h3>
+  <p>
+    Everything you do here (progress, bookmarks, notes, settings) stays in this browser on this
+    device. Nothing is sent anywhere. Export a copy to keep it safe or move it to another device;
+    importing adds to what's already here.
+  </p>
+  @if (db.info()?.storage === 'temporary') {
+    <p class="warning">
+      This browser isn't saving your data at the moment, so export before you close the page.
+    </p>
+  }
+  <div class="row">
+    <button type="button" class="pill" (click)="exportData()">⇩ Export 匯出</button>
+    <label class="pill file">
+      ⇧ Import 匯入
+      <input
+        type="file"
+        accept="application/json,.json"
+        (change)="importData(fileInput)"
+        #fileInput
+      />
+    </label>
+  </div>
+  @if (backupMessage(); as m) {
+    <p [class.warning]="m.error" role="status">{{ m.text }}</p>
+  }
+</section>
+
+<section class="panel" aria-labelledby="about-title">
+  <h3 id="about-title">關於 About</h3>
+  <p>
+    <span lang="zh-Hant">賢文</span> Worthy Words is free and open source. Code under AGPL-3.0,
+    lesson content under CC BY-SA 4.0. Entries marked <em>草稿 Draft</em> haven't been checked by a
+    reviewer yet.
+    <a href="https://github.com/foodisready/worthy-words">Source and corrections on GitHub</a>.
+  </p>
+  @if (db.info(); as info) {
+    <p class="small">
+      Content {{ info.contentVersion }} · SQLite {{ info.sqliteVersion }} · Storage:
+      {{ info.storage === 'persistent' ? 'saved in this browser' : 'temporary' }}
+    </p>
+  }
+</section>
