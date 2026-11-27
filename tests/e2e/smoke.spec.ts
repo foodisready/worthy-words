@@ -117,6 +117,27 @@ test('the reading guide opens from a lesson and lists the six tones', async ({ p
   await expect(page.locator('tbody tr')).toHaveCount(6);
 });
 
+test('menu labels on phones follow the browser language and can be switched', async ({
+  page,
+  browserName,
+}) => {
+  await page.setViewportSize({ width: 390, height: 800 });
+  await page.goto('./');
+  const nav = page.getByRole('navigation', { name: 'Main' });
+  // The test browser's language is English.
+  await expect(nav.getByText('Today', { exact: true })).toBeVisible();
+  await expect(nav.getByText('今日', { exact: true })).toBeHidden();
+
+  await nav.getByRole('link', { name: /Settings/ }).click();
+  await page.getByLabel('中文 今日').check();
+  await expect(nav.getByText('今日', { exact: true })).toBeVisible();
+  await expect(nav.getByText('Today', { exact: true })).toBeHidden();
+
+  test.skip(browserName === 'webkit', NO_OPFS);
+  await page.reload();
+  await expect(nav.getByText('今日', { exact: true })).toBeVisible();
+});
+
 test('no page is wider than a small phone screen', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 700 });
   for (const path of [

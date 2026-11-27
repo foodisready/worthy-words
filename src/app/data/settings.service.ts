@@ -11,6 +11,8 @@ export interface Settings {
   /** Show the word-for-word English under the natural translation. */
   showLiteral: boolean;
   textSize: 'normal' | 'large' | 'larger';
+  /** Labels under the menu icons on phones (wider screens show both). */
+  menuLabels: 'zh' | 'en';
   /** Daily reminder time, HH:MM. */
   reminderTime: string;
   /** The first-visit welcome has been dismissed. */
@@ -23,9 +25,16 @@ export const DEFAULT_SETTINGS: Settings = {
   explanation: 'cantonese',
   showLiteral: false,
   textSize: 'normal',
+  menuLabels: prefersChinese() ? 'zh' : 'en',
   reminderTime: '08:00',
   welcomed: false,
 };
+
+/** True when the browser's preferred languages start with Chinese. */
+function prefersChinese(): boolean {
+  const languages = typeof navigator === 'undefined' ? [] : navigator.languages;
+  return /^(zh|yue)\b/i.test(languages[0] ?? '');
+}
 
 const TEXT_SCALE: Record<Settings['textSize'], string> = {
   normal: '1',

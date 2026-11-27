@@ -67,6 +67,21 @@
     }
   </fieldset>
 
+  <fieldset>
+    <legend>Menu labels 選單</legend>
+    @for (o of menuOptions; track o.value) {
+      <label
+        ><input
+          type="radio"
+          name="menu"
+          [checked]="settings().menuLabels === o.value"
+          (change)="service.set('menuLabels', o.value)"
+        />
+        {{ o.label }}</label
+      >
+    }
+  </fieldset>
+
   <label class="check"
     ><input
       type="checkbox"

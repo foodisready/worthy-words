@@ -28,6 +28,10 @@ export class SettingsPage {
     { value: 'pinyin', label: '拼音 Pinyin (Mandarin)' },
     { value: 'none', label: '無 None' },
   ];
+  protected readonly menuOptions: { value: Settings['menuLabels']; label: string }[] = [
+    { value: 'zh', label: '中文 今日' },
+    { value: 'en', label: 'English Today' },
+  ];
   protected readonly scriptOptions: { value: Settings['script']; label: string }[] = [
     { value: 'trad', label: '繁體 Traditional' },
     { value: 'simp', label: '简体 Simplified' },

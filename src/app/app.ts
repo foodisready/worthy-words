@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { DbService } from './data/db.service';
+import { SettingsService } from './data/settings.service';
 
 @Component({
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
@@ -10,6 +11,7 @@ import { DbService } from './data/db.service';
 })
 export class App {
   protected readonly db = inject(DbService);
+  protected readonly settings = inject(SettingsService).settings;
 
   protected readonly nav = [
     { path: '/', zh: '今日', en: 'Today', icon: '日', exact: true },
