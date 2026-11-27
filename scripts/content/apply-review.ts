@@ -7,13 +7,16 @@
 // entry as it is now (same fingerprint). An entry is approved when:
 //   - the owner (the editor) marked it ✓, and
 //   - at least --need other reviewers marked it ✓ (default 1), and
+//   - at least --mandarin of those checked Mandarin (focus "mandarin" or
+//     "both"; default 1), and
 //   - nobody marked it ✎ Change.
-// Approved entries get `reviewed: true` and `reviewed_by:` with the credits
-// the ✓ reviewers chose. Everything else is listed for a person to act on.
+// Approved entries get `reviewed: true` and `reviewed_by:` crediting everyone
+// who gave a verdict on the entry, on any version: finding a mistake counts as
+// much as approving the fix. Everything else is listed for a person to act on.
 //
 // Usage:
 //   npm run content:apply-review -- --owner <reviewer id>   (once: whose ✓ is required)
-//   npm run content:apply-review -- [--dry-run] [--need N] [files...]
+//   npm run content:apply-review -- [--dry-run] [--need N] [--mandarin N] [files...]
 //   pbpaste | npm run content:apply-review -- -               (add pasted text)
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join, resolve, sep } from 'node:path';
@@ -39,6 +42,7 @@ const flag = (name: string) => {
 };
 const ownerArg = flag('--owner');
 const need = Number(flag('--need') ?? 1);
+const needMandarin = Number(flag('--mandarin') ?? 1);
 const dryRun = args.includes('--dry-run');
 const files = args.filter((a) => a !== '--dry-run');
 
@@ -131,6 +135,7 @@ const toFix: string[] = [];
 const unsure: string[] = [];
 const waitingOwner: string[] = [];
 const waitingOthers: string[] = [];
+const waitingMandarin: string[] = [];
 const stale = new Map<string, number>(); // reviewer -> outdated verdicts
 
 for (const lesson of content.lessons) {
@@ -152,6 +157,8 @@ for (const lesson of content.lessons) {
     const oks = verdicts.filter(([, e]) => e.verdict === 'ok').map(([rid]) => rid);
     const ownerOk = oks.includes(owner);
     const otherOks = oks.filter((rid) => rid !== owner);
+    const mandarinOks = otherOks.filter((rid) => reviewers.get(rid)?.focus !== 'cantonese');
+    const enough = otherOks.length >= need && mandarinOks.length >= needMandarin;
 
     if (verdicts.some(([, e]) => e.verdict === 'change')) {
       const lines = verdicts.map(
@@ -160,8 +167,11 @@ for (const lesson of content.lessons) {
       );
       const split = oks.length ? ' (reviewers disagree: the owner decides)' : '';
       toFix.push(`  ${p.id} (${lesson.file})${split}\n${lines.join('\n')}`);
-    } else if (ownerOk && otherOks.length >= need) {
-      const credits = [owner, ...otherOks]
+    } else if (ownerOk && enough) {
+      // Everyone who looked at the entry, on any version: the owner first.
+      const everyone = [...(latest.get(p.id)?.keys() ?? [])];
+      const credits = [owner, ...[...reviewers.keys()].filter((rid) => rid !== owner)]
+        .filter((rid) => everyone.includes(rid))
         .map((rid) => reviewers.get(rid)?.credit.trim() ?? '')
         .filter(Boolean);
       const merged = [...new Set([...(p.reviewed_by ?? []), ...credits])];
@@ -174,7 +184,9 @@ for (const lesson of content.lessons) {
         .map(([rid, e]) => `    ? ${who(rid)}${oneLine(e.comment)}`);
       unsure.push(`  ${p.id} (${lesson.file})\n${lines.join('\n')}`);
     } else if (!p.reviewed) {
-      (ownerOk ? waitingOthers : waitingOwner).push(p.id);
+      if (!ownerOk) waitingOwner.push(p.id);
+      else if (otherOks.length < need) waitingOthers.push(p.id);
+      else waitingMandarin.push(p.id);
     }
   }
 }
@@ -208,16 +220,18 @@ const section = (title: string, lines: string[]) => {
 };
 console.log(`\nReviewers: ${[...reviewers.keys()].map((id) => `${who(id)} [${id}]`).join(', ')}`);
 if (!reviewers.has(owner)) console.log(`The owner (${owner}) hasn't sent any verdicts yet.`);
-console.log(
-  `${dryRun ? 'Would approve' : 'Approved'} ${approve.length}` +
-    (approve.length ? `: ${approve.map((a) => a.id).join(', ')}` : ''),
-);
+console.log(`${dryRun ? 'Would approve' : 'Approved'} ${approve.length}`);
+for (const a of approve) console.log(`  ${a.id}: ${a.credits.join(', ') || '(no credits)'}`);
 section(`To fix (${toFix.length})`, toFix);
 section(`Unsure (${unsure.length})`, unsure);
 section('Waiting for the owner’s ✓', waitingOwner.length ? [`  ${waitingOwner.join(', ')}`] : []);
 section(
   `Waiting for ${need} more reviewer${need === 1 ? '' : 's'} to ✓`,
   waitingOthers.length ? [`  ${waitingOthers.join(', ')}`] : [],
+);
+section(
+  'Waiting for a Mandarin reviewer’s ✓',
+  waitingMandarin.length ? [`  ${waitingMandarin.join(', ')}`] : [],
 );
 if (stale.size) {
   const list = [...stale].map(([id, n]) => `${who(id)} ${n}`).join(', ');

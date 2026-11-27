@@ -148,7 +148,12 @@ test('review: two reviewers’ verdicts combine, and the owner’s ✓ is requir
   test.skip(browserName === 'webkit', NO_OPFS);
 
   /** Gives verdicts on lesson 1 as a named reviewer and returns the downloaded file. */
-  async function review(p: Page, name: string, verdicts: [string, RegExp, string?][]) {
+  async function review(
+    p: Page,
+    name: string,
+    focus: RegExp,
+    verdicts: [string, RegExp, string?][],
+  ) {
     await p.goto('./review/1');
     await p.getByLabel('Your name').fill(name);
     await p.getByLabel('Your name').blur();
@@ -158,6 +163,7 @@ test('review: two reviewers’ verdicts combine, and the owner’s ✓ is requir
         .map((w) => w[0] + '.')
         .join(''),
     );
+    await p.getByLabel(focus).check();
     for (const [id, verdict, comment] of verdicts) {
       const entry = p.locator(`[data-review="${id}"]`);
       await entry.getByRole('button', { name: verdict }).click();
@@ -178,12 +184,13 @@ test('review: two reviewers’ verdicts combine, and the owner’s ✓ is requir
     await download.saveAs(file);
     return file;
   }
+  const newPage = async () => (await browser.newContext()).newPage();
 
   // The owner: kept after a reload.
   await page.goto('./review/1');
   await page.getByRole('button', { name: /Download/ }).click();
   await expect(page.getByRole('status')).toContainText('Add your name');
-  const ownerFile = await review(page, 'Owen Wu', [
+  const owner = await review(page, 'Owen Wu', /both/, [
     ['zgxw-001', /OK/],
     ['zgxw-002', /Change/, '鑑 should be gaam3 in the notes too'],
   ]);
@@ -192,24 +199,36 @@ test('review: two reviewers’ verdicts combine, and the owner’s ✓ is requir
     '鑑 should be gaam3 in the notes too',
   );
 
-  // A second reviewer, on another device.
-  const other = await (await browser.newContext()).newPage();
-  const otherFile = await review(other, 'Ann Lee', [
+  // Other reviewers, each on their own device.
+  const ann = await review(await newPage(), 'Ann Lee', /Cantonese/, [
     ['zgxw-001', /OK/],
     ['zgxw-002', /OK/],
     ['zgxw-003', /OK/],
   ]);
+  const kit = await review(await newPage(), 'Kit Ho', /Cantonese/, [
+    ['zgxw-001', /Unsure/, 'Is 鑑 right here?'],
+  ]);
+  const mei = await review(await newPage(), 'Mei Chan', /Mandarin/, [['zgxw-001', /OK/]]);
 
-  const ownerId = JSON.parse(readFileSync(ownerFile, 'utf8')).reviewer.id;
-  const output = execFileSync(
-    'node',
-    ['scripts/content/apply-review.ts', '--dry-run', '--owner', ownerId, ownerFile, otherFile],
-    { encoding: 'utf8', env: { ...process.env, REVIEW_INBOX: testInfo.outputPath('inbox') } },
-  );
-  expect(output).toContain('Would approve 1: zgxw-001');
+  const ownerId = JSON.parse(readFileSync(owner, 'utf8')).reviewer.id;
+  const run = (...files: string[]) =>
+    execFileSync(
+      'node',
+      ['scripts/content/apply-review.ts', '--dry-run', '--owner', ownerId, ...files],
+      { encoding: 'utf8', env: { ...process.env, REVIEW_INBOX: testInfo.outputPath('inbox') } },
+    );
+
+  // Owner and a Cantonese reviewer aren't enough: a Mandarin ✓ is needed too.
+  let output = run(owner, ann);
+  expect(output).toContain('Would approve 0');
+  expect(output).toMatch(/Waiting for a Mandarin reviewer’s ✓:\n {2}zgxw-001/);
   expect(output).toMatch(/zgxw-002 \(001\.yaml\) \(reviewers disagree/);
   expect(output).toContain('✎ Owen Wu (owner) [both]: 鑑 should be gaam3 in the notes too');
   expect(output).toMatch(/Waiting for the owner’s ✓:\n {2}zgxw-003/);
+
+  // With a Mandarin ✓ it's approved, crediting everyone who reviewed it (Kit was unsure).
+  output = run(owner, ann, kit, mei);
+  expect(output).toContain('Would approve 1\n  zgxw-001: O.W., A.L., K.H., M.C.');
 });
 
 test('no page is wider than a small phone screen', async ({ page }) => {
