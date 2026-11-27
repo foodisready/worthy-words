@@ -9,7 +9,7 @@ A free, open-source app for learning 《增廣賢文》 (_Zeng Guang Xian Wen_),
 
 **Try it: <https://foodisready.github.io/worthy-words/>**
 
-> Work in progress: lesson content is still being reviewed, and entries marked 草稿 Draft haven't been checked yet. See the [product plan](docs/Zeng_Guang_Xian_Wen_PWA_PRD.md) and the [readings guide](docs/readings.md) (Jyutping tones, colloquial vs literary readings).
+> Work in progress: lesson content is still being reviewed, and entries marked 草稿 Draft haven't been checked yet. See the [product plan](docs/Zeng_Guang_Xian_Wen_PWA_PRD.md) the [readings guide](docs/readings.md) (Jyutping tones, colloquial vs literary readings) and the [decision log](docs/decisions.md).
 
 ## Development
 
