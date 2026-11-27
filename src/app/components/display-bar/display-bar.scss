@@ -16,7 +16,7 @@
     font-size: 0.85rem;
     min-width: 2.5rem;
     min-height: 2.25rem;
-    padding: 0 0.7rem;
+    padding: 0 0.55rem;
     border: 0;
     background: none;
     color: var(--muted);
@@ -35,5 +35,23 @@
       outline: 2px solid var(--accent);
       outline-offset: -3px;
     }
+  }
+}
+
+.help {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2.25rem;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--accent);
+    border-color: var(--accent);
   }
 }

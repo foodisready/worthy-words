@@ -109,6 +109,14 @@ test('themes list their proverbs', async ({ page }) => {
   await expect(card(page, 'zgxw-039')).toBeVisible();
 });
 
+test('the reading guide opens from a lesson and lists the six tones', async ({ page }) => {
+  await page.goto('./lessons/1');
+  await page.getByRole('link', { name: /How to read the pronunciation/ }).click();
+  await expect(page).toHaveURL(/guide$/);
+  await expect(page.getByRole('heading', { level: 2 })).toHaveText('讀音');
+  await expect(page.locator('tbody tr')).toHaveCount(6);
+});
+
 test('export, import and the calendar reminder download files', async ({ page }) => {
   await page.goto('./settings');
 

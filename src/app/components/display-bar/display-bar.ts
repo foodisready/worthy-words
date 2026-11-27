@@ -1,9 +1,11 @@
 import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { SettingsService, type Settings } from '../../data/settings.service';
 
 /** Quick switches for how proverbs are shown: reading aid and character set. */
 @Component({
   selector: 'app-display-bar',
+  imports: [RouterLink],
   template: `
     <div class="bar" role="group" aria-label="Display 顯示">
       <div class="segmented" role="radiogroup" aria-label="Reading aid 注音">
@@ -48,6 +50,15 @@ import { SettingsService, type Settings } from '../../data/settings.service';
           </button>
         }
       </div>
+      @if (settings().reading !== 'none') {
+        <a
+          class="help"
+          routerLink="/guide"
+          aria-label="How to read the pronunciation 讀音指南"
+          title="How to read the pronunciation 讀音指南"
+          >?</a
+        >
+      }
     </div>
   `,
   styleUrl: './display-bar.scss',

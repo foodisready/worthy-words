@@ -38,5 +38,10 @@ export const routes: Routes = [
     title: `設定 Settings · ${name}`,
     loadComponent: () => import('./pages/settings/settings').then((m) => m.SettingsPage),
   },
+  {
+    path: 'guide',
+    title: `讀音 How to read · ${name}`,
+    loadComponent: () => import('./pages/guide/guide').then((m) => m.GuidePage),
+  },
   { path: '**', redirectTo: '' },
 ];

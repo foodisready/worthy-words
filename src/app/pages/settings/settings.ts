@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { DbService } from '../../data/db.service';
 import { localDay } from '../../data/dates';
 import { reminderIcs } from '../../data/reminder';
@@ -8,6 +9,7 @@ import { StudyService } from '../../data/study.service';
 /** Preferences, the calendar reminder, backups, and about. */
 @Component({
   selector: 'app-settings',
+  imports: [RouterLink],
   templateUrl: './settings.html',
   styleUrl: './settings.scss',
 })
