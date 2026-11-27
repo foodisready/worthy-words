@@ -117,6 +117,26 @@ test('the reading guide opens from a lesson and lists the six tones', async ({ p
   await expect(page.locator('tbody tr')).toHaveCount(6);
 });
 
+test('no page is wider than a small phone screen', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 700 });
+  for (const path of [
+    './',
+    './lessons',
+    './lessons/5',
+    './themes',
+    './themes/diligence-time',
+    './saved',
+    './settings',
+    './guide',
+  ]) {
+    await page.goto(path);
+    await expect(page.locator('main h2').first()).toBeVisible();
+    await expect(page.getByText('Loading…')).toHaveCount(0);
+    const width = await page.evaluate(() => document.documentElement.scrollWidth);
+    expect(width, path).toBeLessThanOrEqual(320);
+  }
+});
+
 test('export, import and the calendar reminder download files', async ({ page }) => {
   await page.goto('./settings');
 

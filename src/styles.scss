@@ -118,6 +118,8 @@ a {
   margin: 0;
   padding: 0;
   display: grid;
+  /* minmax(0, …) lets items shrink, so long lines ellipsize instead of widening the page. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
 }
 
