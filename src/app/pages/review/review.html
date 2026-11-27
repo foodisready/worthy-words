@@ -1,0 +1,187 @@
+<header class="page-header">
+  <h2 lang="zh-Hant">審稿</h2>
+  <p class="subtitle">Review: check each entry and mark it</p>
+</header>
+
+@if (error(); as e) {
+  <p class="status error" role="alert">Couldn't load the entries: {{ e.message }}</p>
+} @else if (currentLesson(); as lesson) {
+  <section class="panel summary" aria-labelledby="summary-title">
+    <h3 id="summary-title" class="visually-hidden">Progress</h3>
+    <p class="tally">
+      <span
+        ><strong>{{ counts().ok }}</strong> ✓ OK</span
+      >
+      <span
+        ><strong>{{ counts().change }}</strong> ✎ Change</span
+      >
+      <span
+        ><strong>{{ counts().unsure }}</strong> ? Unsure</span
+      >
+      <span
+        ><strong>{{ counts().todo }}</strong> to do</span
+      >
+      @if (counts().approved) {
+        <span
+          ><strong>{{ counts().approved }}</strong> 已審 done before</span
+        >
+      }
+    </p>
+    <p class="small">
+      Your verdicts stay on this device. When you've done some, send them to Claude: Copy (or Share)
+      and paste into the chat. Only entries you mark ✓ will be marked reviewed.
+    </p>
+    <div class="actions">
+      <button type="button" class="pill primary" (click)="copy()">⧉ Copy 複製</button>
+      @if (canShare) {
+        <button type="button" class="pill" (click)="share()">↗ Share 分享</button>
+      }
+      <button type="button" class="pill" (click)="download()">⇩ Download 下載</button>
+    </div>
+    @if (message(); as m) {
+      <p [class.warning]="m.error" role="status">{{ m.text }}</p>
+    }
+  </section>
+
+  <nav class="lesson-picker" aria-label="Lessons">
+    @for (l of lessons(); track l.id) {
+      <a
+        [routerLink]="['/review', l.id]"
+        [class.current]="l.id === lesson.id"
+        [class.complete]="l.done === l.total"
+        [attr.aria-current]="l.id === lesson.id ? 'page' : null"
+        [title]="l.title_en"
+      >
+        <span class="n">{{ l.id }}</span>
+        <span class="done">{{ l.done }}/{{ l.total }}</span>
+      </a>
+    }
+  </nav>
+
+  <h3 class="lesson-title">
+    <span lang="zh-Hant">{{ lesson.title_zh }}</span>
+    <span class="en">{{ lesson.title_en }}</span>
+  </h3>
+
+  <ol class="stack">
+    @for (item of items(); track item.proverb.id) {
+      @let p = item.proverb;
+      <li>
+        <article
+          class="panel entry"
+          [attr.data-review]="p.id"
+          [class.ok]="item.review?.verdict === 'ok'"
+          [class.change]="item.review?.verdict === 'change'"
+          [class.unsure]="item.review?.verdict === 'unsure'"
+        >
+          <header class="entry-head">
+            <span class="id">{{ p.id }}</span>
+            @if (p.reviewed) {
+              <span class="badge">已審 Reviewed</span>
+            }
+            @if (item.stale) {
+              <span class="badge stale">Changed since your review: check again</span>
+            }
+          </header>
+
+          <div class="chars" lang="zh-Hant">
+            @for (clause of item.columns; track $index) {
+              <span class="clause">
+                @for (c of clause; track $index) {
+                  <span class="col">
+                    <span class="jp">{{ c.jyutping }}</span>
+                    <span class="trad">{{ c.trad }}</span>
+                    <span class="simp" [class.same]="c.simp === c.trad" lang="zh-Hans">{{
+                      c.simp
+                    }}</span>
+                    <span class="py">{{ c.pinyin }}</span>
+                  </span>
+                }
+              </span>
+            }
+          </div>
+          <p class="legend">Rows: 粵拼 · 繁體 · 简体 (grey when the same) · 拼音</p>
+
+          <dl class="fields">
+            <dt>白話解釋 · 廣東話</dt>
+            <dd lang="yue-Hant">{{ p.explain_cantonese }}</dd>
+            <dt>白話解釋 · 書面語</dt>
+            <dd lang="zh-Hant">{{ p.explain_standard }}</dd>
+            <dt>English</dt>
+            <dd>{{ p.en_natural }}</dd>
+            @if (p.en_literal) {
+              <dt>Word for word 直譯</dt>
+              <dd>{{ p.en_literal }}</dd>
+            }
+            @if (p.en_equivalent) {
+              <dt>English saying 英文諺語</dt>
+              <dd>{{ p.en_equivalent }}</dd>
+            }
+            @if (p.context_note) {
+              <dt>Notes 註</dt>
+              <dd>{{ p.context_note }}</dd>
+            }
+            <dt>Themes 主題</dt>
+            <dd>
+              @for (t of themesOf(p); track t) {
+                <span class="tag">{{ themeLabel(t) }}</span>
+              }
+            </dd>
+          </dl>
+
+          <div class="verdicts" role="group" [attr.aria-label]="'Verdict for ' + p.id">
+            @for (v of verdicts; track v.value) {
+              <button
+                type="button"
+                class="verdict"
+                [class]="v.value"
+                [attr.aria-pressed]="item.review?.verdict === v.value"
+                (click)="choose(item, v.value, comment.value)"
+              >
+                {{ v.mark }} <span lang="zh-Hant">{{ v.zh }}</span> {{ v.en }}
+              </button>
+            }
+          </div>
+
+          <div class="comment" [hidden]="!showComment(item)">
+            <label [for]="'comment-' + p.id">
+              @if (item.review?.verdict === 'ok') {
+                Comment (optional)
+              } @else {
+                What should change? 點樣改？
+              }
+            </label>
+            <textarea
+              #comment
+              [id]="'comment-' + p.id"
+              rows="3"
+              [value]="item.review?.comment ?? ''"
+              (change)="saveComment(item, comment.value)"
+              placeholder="e.g. 近 should be kan5; 廣東話解釋「攞」→「用」"
+            ></textarea>
+            @if (!item.review) {
+              <p class="small">Choose ✎ or ? above to save this comment.</p>
+            }
+          </div>
+          @if (!showComment(item)) {
+            <button type="button" class="text-button add-comment" (click)="openComment(item)">
+              + Add a comment
+            </button>
+          }
+        </article>
+      </li>
+    }
+  </ol>
+
+  <p class="actions">
+    @if (nextLesson(); as next) {
+      <a class="pill primary" [routerLink]="['/review', next.id]"
+        >Next: lesson {{ next.id }} 下一課 →</a
+      >
+    } @else {
+      <span class="small">That's the last lesson. Copy or Share your verdicts above.</span>
+    }
+  </p>
+} @else {
+  <p class="status">載入中… Loading…</p>
+}

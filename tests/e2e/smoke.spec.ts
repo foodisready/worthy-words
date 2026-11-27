@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process';
 import { expect, test, type Page } from '@playwright/test';
 
 const card = (page: Page, id: string) => page.locator(`app-proverb-card[data-proverb="${id}"]`);
@@ -138,6 +139,47 @@ test('menu labels on phones follow the browser language and can be switched', as
   await expect(nav.getByText('今日', { exact: true })).toBeVisible();
 });
 
+test('review: verdicts are kept, and the exported file applies to the content', async ({
+  page,
+  browserName,
+}, testInfo) => {
+  test.skip(browserName === 'webkit', NO_OPFS);
+  await page.goto('./review/1');
+  const entry = (id: string) => page.locator(`[data-review="${id}"]`);
+
+  await entry('zgxw-001').getByRole('button', { name: /OK/ }).click();
+  await expect(entry('zgxw-001').getByRole('button', { name: /OK/ })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
+  await entry('zgxw-002')
+    .getByRole('button', { name: /Change/ })
+    .click();
+  const comment = entry('zgxw-002').getByRole('textbox');
+  await comment.fill('鑑 should be gaam3 in the notes too');
+  await comment.blur();
+  await expect(page.locator('.tally')).toContainText('1 ✓ OK');
+  await expect(page.locator('.tally')).toContainText('1 ✎ Change');
+
+  await page.reload();
+  await expect(entry('zgxw-002').getByRole('textbox')).toHaveValue(
+    '鑑 should be gaam3 in the notes too',
+  );
+
+  const [download] = await Promise.all([
+    page.waitForEvent('download'),
+    page.getByRole('button', { name: /Download/ }).click(),
+  ]);
+  const file = testInfo.outputPath('review.json');
+  await download.saveAs(file);
+  const output = execFileSync('node', ['scripts/content/apply-review.ts', '--dry-run', file], {
+    encoding: 'utf8',
+  });
+  expect(output).toContain('Would mark 1 entry reviewed: zgxw-001');
+  expect(output).toContain('✎ zgxw-002');
+  expect(output).toContain('鑑 should be gaam3 in the notes too');
+});
+
 test('no page is wider than a small phone screen', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 700 });
   for (const path of [
@@ -149,6 +191,7 @@ test('no page is wider than a small phone screen', async ({ page }) => {
     './saved',
     './settings',
     './guide',
+    './review/5',
   ]) {
     await page.goto(path);
     await expect(page.locator('main h2').first()).toBeVisible();

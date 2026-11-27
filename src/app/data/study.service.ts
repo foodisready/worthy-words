@@ -88,6 +88,9 @@ export class StudyService {
       study_days: await this.db.query('SELECT day FROM user.study_days ORDER BY day'),
       bookmarks: await this.db.query('SELECT proverb_id, created_at FROM user.bookmarks'),
       notes: await this.db.query('SELECT proverb_id, body, updated_at FROM user.notes'),
+      reviews: await this.db.query(
+        'SELECT proverb_id, verdict, comment, fingerprint, updated_at FROM user.reviews',
+      ),
     };
   }
 

@@ -17,6 +17,14 @@ export interface Backup {
   study_days: { day: string }[];
   bookmarks: { proverb_id: string; created_at: string }[];
   notes: { proverb_id: string; body: string; updated_at: string }[];
+  /** Added later: older backups have none. */
+  reviews: {
+    proverb_id: string;
+    verdict: string;
+    comment: string;
+    fingerprint: string;
+    updated_at: string;
+  }[];
 }
 
 type Shape = Record<string, 'string'>;
@@ -26,6 +34,13 @@ const TABLES: Record<Exclude<keyof Backup, 'format' | 'version' | 'exported_at'>
   study_days: { day: 'string' },
   bookmarks: { proverb_id: 'string', created_at: 'string' },
   notes: { proverb_id: 'string', body: 'string', updated_at: 'string' },
+  reviews: {
+    proverb_id: 'string',
+    verdict: 'string',
+    comment: 'string',
+    fingerprint: 'string',
+    updated_at: 'string',
+  },
 };
 
 /** Checks a parsed file is a backup this version can read. Throws a readable message if not. */
@@ -94,6 +109,19 @@ export function importStatements(backup: Backup): Statement[] {
             ON CONFLICT (proverb_id) DO UPDATE SET body = excluded.body, updated_at = excluded.updated_at
             WHERE excluded.updated_at > notes.updated_at`,
       bind: [proverb_id, body, updated_at],
+    });
+  }
+  for (const r of backup.reviews) {
+    if (!['ok', 'change', 'unsure'].includes(r.verdict)) continue;
+    // Keep whichever verdict was given last.
+    statements.push({
+      sql: `INSERT INTO user.reviews (proverb_id, verdict, comment, fingerprint, updated_at)
+            VALUES (?, ?, ?, ?, ?)
+            ON CONFLICT (proverb_id) DO UPDATE SET verdict = excluded.verdict,
+              comment = excluded.comment, fingerprint = excluded.fingerprint,
+              updated_at = excluded.updated_at
+            WHERE excluded.updated_at > reviews.updated_at`,
+      bind: [r.proverb_id, r.verdict, r.comment, r.fingerprint, r.updated_at],
     });
   }
   return statements;

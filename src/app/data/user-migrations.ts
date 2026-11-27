@@ -39,4 +39,15 @@ export const USER_MIGRATIONS: readonly string[] = [
     output_tokens INTEGER NOT NULL
   ) STRICT;
   `,
+
+  // 2: a reviewer's verdicts on lesson entries (the /review page)
+  `
+  CREATE TABLE user.reviews (
+    proverb_id  TEXT PRIMARY KEY,
+    verdict     TEXT NOT NULL CHECK (verdict IN ('ok', 'change', 'unsure')),
+    comment     TEXT NOT NULL,
+    fingerprint TEXT NOT NULL,            -- the entry as reviewed (src/app/data/review.ts)
+    updated_at  TEXT NOT NULL
+  ) STRICT;
+  `,
 ];

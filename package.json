@@ -1,6 +1,7 @@
 {
   "name": "worthy-words",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "npm run content:build && ng serve",
@@ -14,7 +15,8 @@
     "typecheck:scripts": "tsc -p scripts",
     "e2e": "playwright test",
     "build:pages": "npm run content:build && ng build --base-href /worthy-words/ && node scripts/pages-404.ts",
-    "content:readings": "node scripts/content/review-readings.ts"
+    "content:readings": "node scripts/content/review-readings.ts",
+    "content:apply-review": "node scripts/content/apply-review.ts"
   },
   "private": true,
   "packageManager": "npm@11.17.0",

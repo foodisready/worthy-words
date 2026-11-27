@@ -43,5 +43,15 @@ export const routes: Routes = [
     title: `讀音 How to read · ${name}`,
     loadComponent: () => import('./pages/guide/guide').then((m) => m.GuidePage),
   },
+  {
+    path: 'review',
+    title: `審稿 Review · ${name}`,
+    loadComponent: () => import('./pages/review/review').then((m) => m.ReviewPage),
+  },
+  {
+    path: 'review/:lesson',
+    title: `審稿 Review · ${name}`,
+    loadComponent: () => import('./pages/review/review').then((m) => m.ReviewPage),
+  },
   { path: '**', redirectTo: '' },
 ];

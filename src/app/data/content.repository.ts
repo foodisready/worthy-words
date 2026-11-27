@@ -88,6 +88,13 @@ export class ContentRepository {
     return lesson;
   }
 
+  /** Every proverb in book order (about 400 at most). */
+  allProverbs(): Promise<Proverb[]> {
+    return this.db.query<Proverb>(
+      `SELECT ${PROVERB_COLUMNS} FROM proverbs p ${PROVERB_JOINS} ORDER BY p.position`,
+    );
+  }
+
   proverbsInLesson(lessonId: number): Promise<Proverb[]> {
     return this.db.query<Proverb>(
       `SELECT ${PROVERB_COLUMNS} FROM proverbs p ${PROVERB_JOINS}

@@ -36,7 +36,7 @@ How it fits together:
 2. `npm run content:fill` adds simplified text, Pinyin and Jyutping to new entries.
 3. `npm run content:readings` lists every reading to check: characters whose reading depends on meaning, characters with both a colloquial (白讀) and a literary (文讀) Cantonese reading, and hand corrections. Pinyin uses dictionary tones (一 yī, 不 bù, no tone changes). Jyutping follows everyday Hong Kong speech, word by word: 有錢 cin2 and 行 haang4, but 錢財 cin4 and 成陰 sing4. The [readings guide](docs/readings.md) explains the tone numbers and these rules.
 4. `npm run content:check` reports any problems, including text that doesn't match the source lines an entry names (`content/source/`).
-5. Set `reviewed: true` only once a person has checked the whole entry.
+5. Set `reviewed: true` only once a person has checked the whole entry. The easiest way: the reviewer opens [審稿 Review](https://foodisready.github.io/worthy-words/review) in the app, marks each entry ✓ OK, ✎ Change or ? Unsure, and sends the result (Copy, Share or Download). `npm run content:apply-review -- <file>` (or pipe pasted text into it) marks the ✓ entries reviewed, but only if they haven't changed since, and lists the ✎ and ? comments to act on.
 
 ## License
 
