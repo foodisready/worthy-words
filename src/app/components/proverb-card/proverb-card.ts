@@ -64,6 +64,16 @@ export class ProverbCard {
     return ids.map((id) => all.find((t) => t.id === id) ?? { id, name_zh: id, name_en: '' });
   });
 
+  /** Credits of the reviewers who approved this entry. */
+  protected readonly reviewers = computed(() => {
+    try {
+      const list: unknown = JSON.parse(this.proverb().reviewed_by ?? '[]');
+      return Array.isArray(list) ? list.map(String) : [];
+    } catch {
+      return [];
+    }
+  });
+
   protected async toggleBookmark() {
     const next = !this.bookmarked();
     this.bookmarked.set(next);

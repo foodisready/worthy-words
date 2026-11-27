@@ -17,6 +17,12 @@ export interface Settings {
   reminderTime: string;
   /** The first-visit welcome has been dismissed. */
   welcomed: boolean;
+  /** The content reviewer's profile, for the /review page. The id is made on first use. */
+  reviewerId: string;
+  reviewerName: string;
+  /** How to credit them in the app; empty for no credit. */
+  reviewerCredit: string;
+  reviewerFocus: 'cantonese' | 'mandarin' | 'both';
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -28,6 +34,10 @@ export const DEFAULT_SETTINGS: Settings = {
   menuLabels: prefersChinese() ? 'zh' : 'en',
   reminderTime: '08:00',
   welcomed: false,
+  reviewerId: '',
+  reviewerName: '',
+  reviewerCredit: '',
+  reviewerFocus: 'both',
 };
 
 /** True when the browser's preferred languages start with Chinese. */

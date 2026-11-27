@@ -64,8 +64,8 @@ const insertProverb = db.prepare(`
   INSERT INTO proverbs (
     id, lesson_id, position, text_trad, text_simp, pinyin, jyutping,
     explain_cantonese, explain_standard, en_natural, en_literal, en_equivalent,
-    context_note, insight, reviewed, search_text
-  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+    context_note, insight, reviewed, reviewed_by, search_text
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
 const insertProverbTheme = db.prepare(
   'INSERT INTO proverb_themes (proverb_id, theme_id) VALUES (?, ?)',
 );
@@ -108,6 +108,7 @@ for (const { lesson, proverbs } of lessons) {
       p.context_note ?? null,
       null,
       p.reviewed ? 1 : 0,
+      p.reviewed_by?.length ? JSON.stringify(p.reviewed_by) : null,
       searchText,
     );
     for (const theme of p.themes) insertProverbTheme.run(p.id, theme);

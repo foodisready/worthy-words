@@ -36,6 +36,8 @@ export interface Proverb {
   en_equivalent: string | null;
   context_note: string | null;
   reviewed: number;
+  /** JSON array of the approving reviewers' credits. */
+  reviewed_by: string | null;
   /** Theme ids, comma separated. */
   themes: string | null;
   bookmarked: number;
@@ -46,7 +48,7 @@ export interface Proverb {
 const PROVERB_COLUMNS = `
   p.id, p.lesson_id, p.position, p.text_trad, p.text_simp, p.pinyin, p.jyutping,
   p.explain_cantonese, p.explain_standard, p.en_natural, p.en_literal,
-  p.en_equivalent, p.context_note, p.reviewed,
+  p.en_equivalent, p.context_note, p.reviewed, p.reviewed_by,
   (SELECT group_concat(theme_id) FROM proverb_themes t WHERE t.proverb_id = p.id) AS themes,
   (b.proverb_id IS NOT NULL) AS bookmarked,
   (g.proverb_id IS NOT NULL) AS completed,
@@ -86,6 +88,15 @@ export class ContentRepository {
       [id],
     );
     return lesson;
+  }
+
+  /** Everyone credited for reviewing, in order of first appearance. */
+  async reviewers(): Promise<string[]> {
+    const rows = await this.db.query<{ name: string }>(
+      `SELECT r.value AS name FROM proverbs p, json_each(p.reviewed_by) r
+        GROUP BY r.value ORDER BY min(p.position)`,
+    );
+    return rows.map((r) => r.name);
   }
 
   /** Every proverb in book order (about 400 at most). */

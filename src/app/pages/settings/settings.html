@@ -149,6 +149,12 @@
     reviewer yet.
     <a href="https://github.com/foodisready/worthy-words">Source and corrections on GitHub</a>.
   </p>
+  @if (reviewers.value()?.length) {
+    <p>
+      <span lang="zh-Hant">多謝審稿</span> Thanks to our reviewers:
+      {{ reviewers.value()!.join(' · ') }}
+    </p>
+  }
   <p>
     Checking the lesson content? Open <a routerLink="/review">審稿 Review</a> to go through every
     entry and mark it.

@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { fingerprint, parseReview, reviewText, type ReviewEntry } from './review';
+import {
+  fingerprint,
+  initials,
+  parseReview,
+  reviewText,
+  type ReviewEntry,
+  type Reviewer,
+} from './review';
 
 const entry = {
   text_trad: '觀今宜鑑古，無古不成今。',
@@ -54,11 +61,20 @@ describe('review text', () => {
     },
   ];
 
-  it('round-trips through plain text, sorted by id', () => {
-    const text = reviewText(entries);
+  const reviewer: Reviewer = {
+    id: 'a1b2c3d4',
+    name: 'Ann Lee',
+    credit: 'A.L.',
+    focus: 'cantonese',
+  };
+
+  it('round-trips through plain text, sorted by id, with the reviewer', () => {
+    const text = reviewText({ reviewer, entries });
+    expect(text).toContain('Reviewer: Ann Lee [a1b2c3d4] · credit: A.L. · checking: cantonese');
     expect(text).toContain('✎ zgxw-012 [0a1b2c3d4e5f60]\n  近 should be kan5\n  解釋');
     const back = parseReview(text);
-    expect(back.map((e) => [e.proverb_id, e.verdict, e.comment, e.fingerprint])).toEqual([
+    expect(back.reviewer).toEqual(reviewer);
+    expect(back.entries.map((e) => [e.proverb_id, e.verdict, e.comment, e.fingerprint])).toEqual([
       ['zgxw-001', 'ok', '', '00000000000001'],
       ['zgxw-002', 'unsure', 'Not sure about 鑑', '00000000000002'],
       ['zgxw-012', 'change', '近 should be kan5\n解釋：「攞」→「用」', '0a1b2c3d4e5f60'],
@@ -66,8 +82,11 @@ describe('review text', () => {
   });
 
   it('survives being pasted with extra text around it', () => {
-    const pasted = `Here you go:\n\n${reviewText(entries)}\nThanks!`;
-    expect(parseReview(pasted)).toHaveLength(3);
+    const pasted = `Here you go:\n\n${reviewText({ reviewer, entries })}\nThanks!`;
+    expect(parseReview(pasted).entries).toHaveLength(3);
+    // A reviewer with no name or credit still round-trips.
+    const anon = { ...reviewer, name: '', credit: '' };
+    expect(parseReview(reviewText({ reviewer: anon, entries })).reviewer).toEqual(anon);
   });
 
   it('reads the exported JSON file and rejects other files', () => {
@@ -75,10 +94,19 @@ describe('review text', () => {
       format: 'worthy-words-review',
       version: 1,
       exported_at: '',
+      reviewer,
       entries,
     });
-    expect(parseReview(file)).toHaveLength(3);
+    expect(parseReview(file)).toEqual({ reviewer, entries });
     expect(() => parseReview('{"format":"worthy-words-backup"}')).toThrow(/isn’t a Worthy Words/);
     expect(() => parseReview('hello')).toThrow(/No review entries/);
+  });
+});
+
+describe('initials', () => {
+  it('suggests initials for Latin names and none for Chinese ones', () => {
+    expect(initials('Ann  lee')).toBe('A.L.');
+    expect(initials('李小明')).toBe('');
+    expect(initials('  ')).toBe('');
   });
 });

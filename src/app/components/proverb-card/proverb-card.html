@@ -52,6 +52,10 @@
           }
         </dd>
       }
+      @if (reviewers().length) {
+        <dt>Reviewed by 審稿</dt>
+        <dd>{{ reviewers().join(', ') }}</dd>
+      }
       @if (showLesson()) {
         <dt>Lesson 課</dt>
         <dd>

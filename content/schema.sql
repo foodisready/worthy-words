@@ -36,6 +36,7 @@ CREATE TABLE proverbs (
   context_note      TEXT,
   insight           TEXT,                    -- JSON, created at build time (Phase 2)
   reviewed          INTEGER NOT NULL,        -- 1 once a person has checked the entry
+  reviewed_by       TEXT,                    -- JSON array: credits of the approving reviewers
   search_text       TEXT NOT NULL            -- lower-case text for LIKE search
 ) STRICT;
 

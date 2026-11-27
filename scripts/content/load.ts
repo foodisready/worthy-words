@@ -32,6 +32,8 @@ export const proverbSchema = z.strictObject({
   en_equivalent: text.optional(),
   context_note: text.optional(),
   reviewed: z.boolean(),
+  /** How the reviewers who approved the entry asked to be credited. */
+  reviewed_by: z.array(text).optional(),
 });
 
 export const lessonFileSchema = z.strictObject({
@@ -182,6 +184,7 @@ export function checkContent(content: Content): Problem[] {
           if (!/^[a-z]+[1-6]$/.test(s)) problem(`jyutping "${s}" should be letters and a tone 1-6`);
         }
       }
+      if (p.reviewed_by?.length && !p.reviewed) problem('reviewed_by is set but reviewed is false');
       if (p.reviewed && p.text_simp === undefined)
         problem('text_simp is missing on a reviewed entry');
     });

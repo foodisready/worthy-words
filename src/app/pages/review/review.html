@@ -6,6 +6,62 @@
 @if (error(); as e) {
   <p class="status error" role="alert">Couldn't load the entries: {{ e.message }}</p>
 } @else if (currentLesson(); as lesson) {
+  <section class="panel profile" aria-labelledby="profile-title">
+    <h3 id="profile-title">審稿人 About you</h3>
+    <div class="field">
+      <label for="reviewer-name">Your name 名字</label>
+      <input
+        id="reviewer-name"
+        type="text"
+        autocomplete="name"
+        [value]="settings().reviewerName"
+        (change)="setName($any($event.target).value)"
+      />
+    </div>
+    <div class="field">
+      <label for="reviewer-credit">Credit me as 鳴謝</label>
+      <input
+        id="reviewer-credit"
+        type="text"
+        [value]="settings().reviewerCredit"
+        (change)="settingsService.set('reviewerCredit', $any($event.target).value.trim())"
+        placeholder="e.g. A.L. (leave empty for no credit)"
+      />
+      <p class="small">
+        Shown in the app and on GitHub as thanks, on entries you approve. Initials are suggested;
+        use your full name if you like, or leave it empty.
+      </p>
+    </div>
+    <fieldset class="field">
+      <legend>I'm checking 我負責</legend>
+      @for (o of focusOptions; track o[0]) {
+        <label
+          ><input
+            type="radio"
+            name="focus"
+            [checked]="focus() === o[0]"
+            (change)="settingsService.set('reviewerFocus', o[0])"
+          />
+          {{ o[1] }}</label
+        >
+      }
+    </fieldset>
+    <p class="small">
+      @switch (focus()) {
+        @case ('cantonese') {
+          Check the Jyutping, the 廣東話 explanation and the English. Pinyin is dimmed.
+        }
+        @case ('mandarin') {
+          Check the Pinyin, simplified characters, the 書面語 explanation and the English. The
+          Jyutping and 廣東話 explanation are dimmed.
+        }
+        @default {
+          Check everything.
+        }
+      }
+    </p>
+  </section>
+
   <section class="panel summary" aria-labelledby="summary-title">
     <h3 id="summary-title" class="visually-hidden">Progress</h3>
     <p class="tally">
@@ -28,8 +84,10 @@
       }
     </p>
     <p class="small">
-      Your verdicts stay on this device. When you've done some, send them to Claude: Copy (or Share)
-      and paste into the chat. Only entries you mark ✓ will be marked reviewed.
+      Your verdicts stay on this device. When you've done some, send them to whoever asked you to
+      review: tap Copy (or Share) and paste them into a message. An entry is marked reviewed once
+      the editor and at least one other reviewer have both marked it ✓ and nobody asked for a
+      change.
     </p>
     <div class="actions">
       <button type="button" class="pill primary" (click)="copy()">⧉ Copy 複製</button>
@@ -84,7 +142,12 @@
             }
           </header>
 
-          <div class="chars" lang="zh-Hant">
+          <div
+            class="chars"
+            lang="zh-Hant"
+            [class.dim-jp]="focus() === 'mandarin'"
+            [class.dim-py]="focus() === 'cantonese'"
+          >
             @for (clause of item.columns; track $index) {
               <span class="clause">
                 @for (c of clause; track $index) {
@@ -103,8 +166,8 @@
           <p class="legend">Rows: 粵拼 · 繁體 · 简体 (grey when the same) · 拼音</p>
 
           <dl class="fields">
-            <dt>白話解釋 · 廣東話</dt>
-            <dd lang="yue-Hant">{{ p.explain_cantonese }}</dd>
+            <dt [class.dim]="focus() === 'mandarin'">白話解釋 · 廣東話</dt>
+            <dd lang="yue-Hant" [class.dim]="focus() === 'mandarin'">{{ p.explain_cantonese }}</dd>
             <dt>白話解釋 · 書面語</dt>
             <dd lang="zh-Hant">{{ p.explain_standard }}</dd>
             <dt>English</dt>

@@ -1,5 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, resource, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ContentRepository } from '../../data/content.repository';
 import { DbService } from '../../data/db.service';
 import { localDay } from '../../data/dates';
 import { reminderIcs } from '../../data/reminder';
@@ -17,6 +18,8 @@ export class SettingsPage {
   protected readonly db = inject(DbService);
   protected readonly service = inject(SettingsService);
   private readonly study = inject(StudyService);
+  private readonly content = inject(ContentRepository);
+  protected readonly reviewers = resource({ loader: () => this.content.reviewers() });
   protected readonly settings = this.service.settings;
 
   protected readonly backupMessage = signal<{ text: string; error?: boolean } | undefined>(

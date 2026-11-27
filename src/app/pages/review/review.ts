@@ -2,14 +2,19 @@ import { Component, computed, inject, input, resource, signal } from '@angular/c
 import { RouterLink } from '@angular/router';
 import { ContentRepository, withReadings, type Proverb } from '../../data/content.repository';
 import {
+  FOCUS_LABEL,
   REVIEW_FORMAT,
   fingerprint,
+  initials,
   reviewText,
+  type Focus,
   type ReviewEntry,
   type ReviewFile,
+  type Reviewer,
   type Verdict,
 } from '../../data/review';
 import { ReviewService } from '../../data/review.service';
+import { SettingsService } from '../../data/settings.service';
 
 interface Item {
   proverb: Proverb;
@@ -58,7 +63,11 @@ export class ReviewPage {
 
   private readonly content = inject(ContentRepository);
   private readonly reviews = inject(ReviewService);
+  protected readonly settingsService = inject(SettingsService);
+  protected readonly settings = this.settingsService.settings;
   protected readonly verdicts = VERDICTS;
+  protected readonly focusOptions = Object.entries(FOCUS_LABEL) as [Focus, string][];
+  protected readonly focus = computed(() => this.settings().reviewerFocus);
   protected readonly message = signal<{ text: string; error?: boolean } | undefined>(undefined);
   /** Entries whose comment box was opened before a verdict needing one was saved. */
   protected readonly editing = signal<ReadonlySet<string>>(new Set());
@@ -177,11 +186,50 @@ export class ReviewPage {
     return (this.data.value()?.items ?? []).flatMap((i) => (i.review ? [i.review] : []));
   }
 
+  /** The reviewer's profile, making their id on first use. */
+  private async reviewer(): Promise<Reviewer> {
+    let s = this.settings();
+    if (!s.reviewerId) {
+      await this.settingsService.set('reviewerId', crypto.randomUUID().slice(0, 8));
+      s = this.settings();
+    }
+    return {
+      id: s.reviewerId,
+      name: s.reviewerName,
+      credit: s.reviewerCredit,
+      focus: s.reviewerFocus,
+    };
+  }
+
+  /** False (with a message) when the reviewer hasn't said who they are. */
+  private named(): boolean {
+    if (this.settings().reviewerName.trim()) return true;
+    this.message.set({
+      text: 'Add your name above first, so we know whose verdicts these are.',
+      error: true,
+    });
+    document.getElementById('reviewer-name')?.focus();
+    return false;
+  }
+
   private async exportedText(): Promise<string> {
-    return reviewText(this.current());
+    return reviewText({ reviewer: await this.reviewer(), entries: this.current() });
+  }
+
+  protected async setName(name: string) {
+    const s = this.settings();
+    const suggested = initials(s.reviewerName);
+    if (!s.reviewerId)
+      await this.settingsService.set('reviewerId', crypto.randomUUID().slice(0, 8));
+    await this.settingsService.set('reviewerName', name.trim());
+    // Keep the credit in step with the name until the reviewer edits it.
+    if (!s.reviewerCredit || s.reviewerCredit === suggested) {
+      await this.settingsService.set('reviewerCredit', initials(name));
+    }
   }
 
   protected async copy() {
+    if (!this.named()) return;
     const text = await this.exportedText();
     try {
       await navigator.clipboard.writeText(text);
@@ -194,6 +242,7 @@ export class ReviewPage {
   protected readonly canShare = typeof navigator !== 'undefined' && 'share' in navigator;
 
   protected async share() {
+    if (!this.named()) return;
     try {
       await navigator.share({ title: 'Worthy Words review', text: await this.exportedText() });
     } catch (e) {
@@ -204,10 +253,12 @@ export class ReviewPage {
   }
 
   protected async download() {
+    if (!this.named()) return;
     const file: ReviewFile = {
       format: REVIEW_FORMAT,
       version: 1,
       exported_at: new Date().toISOString(),
+      reviewer: await this.reviewer(),
       entries: this.current(),
     };
     const blob = new Blob([JSON.stringify(file, null, 2)], { type: 'application/json' });

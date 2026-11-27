@@ -28,3 +28,6 @@ playwright-report/
 
 # Built from content/ by npm run content:build
 public/data/
+
+# Reviewers' verdicts (names and comments): see scripts/content/apply-review.ts
+content/review/inbox/

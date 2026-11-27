@@ -1,4 +1,5 @@
 import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 
 const card = (page: Page, id: string) => page.locator(`app-proverb-card[data-proverb="${id}"]`);
@@ -139,45 +140,76 @@ test('menu labels on phones follow the browser language and can be switched', as
   await expect(nav.getByText('今日', { exact: true })).toBeVisible();
 });
 
-test('review: verdicts are kept, and the exported file applies to the content', async ({
+test('review: two reviewers’ verdicts combine, and the owner’s ✓ is required', async ({
   page,
+  browser,
   browserName,
 }, testInfo) => {
   test.skip(browserName === 'webkit', NO_OPFS);
+
+  /** Gives verdicts on lesson 1 as a named reviewer and returns the downloaded file. */
+  async function review(p: Page, name: string, verdicts: [string, RegExp, string?][]) {
+    await p.goto('./review/1');
+    await p.getByLabel('Your name').fill(name);
+    await p.getByLabel('Your name').blur();
+    await expect(p.getByLabel('Credit me as')).toHaveValue(
+      name
+        .split(' ')
+        .map((w) => w[0] + '.')
+        .join(''),
+    );
+    for (const [id, verdict, comment] of verdicts) {
+      const entry = p.locator(`[data-review="${id}"]`);
+      await entry.getByRole('button', { name: verdict }).click();
+      await expect(entry.getByRole('button', { name: verdict })).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      );
+      if (comment) {
+        await entry.getByRole('textbox').fill(comment);
+        await entry.getByRole('textbox').blur();
+      }
+    }
+    const [download] = await Promise.all([
+      p.waitForEvent('download'),
+      p.getByRole('button', { name: /Download/ }).click(),
+    ]);
+    const file = testInfo.outputPath(`${name}.json`);
+    await download.saveAs(file);
+    return file;
+  }
+
+  // The owner: kept after a reload.
   await page.goto('./review/1');
-  const entry = (id: string) => page.locator(`[data-review="${id}"]`);
-
-  await entry('zgxw-001').getByRole('button', { name: /OK/ }).click();
-  await expect(entry('zgxw-001').getByRole('button', { name: /OK/ })).toHaveAttribute(
-    'aria-pressed',
-    'true',
-  );
-  await entry('zgxw-002')
-    .getByRole('button', { name: /Change/ })
-    .click();
-  const comment = entry('zgxw-002').getByRole('textbox');
-  await comment.fill('鑑 should be gaam3 in the notes too');
-  await comment.blur();
-  await expect(page.locator('.tally')).toContainText('1 ✓ OK');
-  await expect(page.locator('.tally')).toContainText('1 ✎ Change');
-
+  await page.getByRole('button', { name: /Download/ }).click();
+  await expect(page.getByRole('status')).toContainText('Add your name');
+  const ownerFile = await review(page, 'Owen Wu', [
+    ['zgxw-001', /OK/],
+    ['zgxw-002', /Change/, '鑑 should be gaam3 in the notes too'],
+  ]);
   await page.reload();
-  await expect(entry('zgxw-002').getByRole('textbox')).toHaveValue(
+  await expect(page.locator('[data-review="zgxw-002"]').getByRole('textbox')).toHaveValue(
     '鑑 should be gaam3 in the notes too',
   );
 
-  const [download] = await Promise.all([
-    page.waitForEvent('download'),
-    page.getByRole('button', { name: /Download/ }).click(),
+  // A second reviewer, on another device.
+  const other = await (await browser.newContext()).newPage();
+  const otherFile = await review(other, 'Ann Lee', [
+    ['zgxw-001', /OK/],
+    ['zgxw-002', /OK/],
+    ['zgxw-003', /OK/],
   ]);
-  const file = testInfo.outputPath('review.json');
-  await download.saveAs(file);
-  const output = execFileSync('node', ['scripts/content/apply-review.ts', '--dry-run', file], {
-    encoding: 'utf8',
-  });
-  expect(output).toContain('Would mark 1 entry reviewed: zgxw-001');
-  expect(output).toContain('✎ zgxw-002');
-  expect(output).toContain('鑑 should be gaam3 in the notes too');
+
+  const ownerId = JSON.parse(readFileSync(ownerFile, 'utf8')).reviewer.id;
+  const output = execFileSync(
+    'node',
+    ['scripts/content/apply-review.ts', '--dry-run', '--owner', ownerId, ownerFile, otherFile],
+    { encoding: 'utf8', env: { ...process.env, REVIEW_INBOX: testInfo.outputPath('inbox') } },
+  );
+  expect(output).toContain('Would approve 1: zgxw-001');
+  expect(output).toMatch(/zgxw-002 \(001\.yaml\) \(reviewers disagree/);
+  expect(output).toContain('✎ Owen Wu (owner) [both]: 鑑 should be gaam3 in the notes too');
+  expect(output).toMatch(/Waiting for the owner’s ✓:\n {2}zgxw-003/);
 });
 
 test('no page is wider than a small phone screen', async ({ page }) => {
