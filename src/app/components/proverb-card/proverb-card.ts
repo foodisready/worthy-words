@@ -46,8 +46,16 @@ export class ProverbCard {
 
   protected readonly otherExplanation = computed(() =>
     this.settings().explanation === 'cantonese'
-      ? { text: this.proverb().explain_standard, lang: 'zh-Hant', label: '書面語 Written Chinese' }
-      : { text: this.proverb().explain_cantonese, lang: 'yue-Hant', label: '廣東話 Cantonese' },
+      ? {
+          text: this.proverb().explain_standard,
+          lang: 'zh-Hant',
+          label: '白話解釋 · 書面語 Written Chinese',
+        }
+      : {
+          text: this.proverb().explain_cantonese,
+          lang: 'yue-Hant',
+          label: '白話解釋 · 廣東話 Cantonese',
+        },
   );
 
   protected readonly themes = computed(() => {

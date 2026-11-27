@@ -16,7 +16,10 @@
     }
   </p>
 
-  <p class="explain" [attr.lang]="explanation().lang">{{ explanation().text }}</p>
+  <p class="explain" [attr.lang]="explanation().lang">
+    <span class="label">白話解釋 · {{ explanation().label }}</span
+    >{{ explanation().text }}
+  </p>
   <p class="english" lang="en">{{ p.en_natural }}</p>
   @if (settings().showLiteral && p.en_literal) {
     <p class="literal" lang="en"><span class="label">Word for word</span> {{ p.en_literal }}</p>
