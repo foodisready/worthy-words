@@ -51,6 +51,9 @@ export class SettingsService {
   readonly settings = this.state.asReadonly();
   /** True once saved settings have been read. */
   readonly loaded = signal(false);
+  /** Settings changed while saved ones were being read: these keep the newer value. */
+  private readonly changedDuringLoad = new Set<keyof Settings>();
+  private loading = false;
 
   constructor() {
     void this.load();
@@ -61,6 +64,8 @@ export class SettingsService {
 
   /** Reads saved settings again (after importing a backup). */
   async load(): Promise<void> {
+    this.loading = true;
+    this.changedDuringLoad.clear();
     try {
       const rows = await this.db.query<{ key: string; value: string }>(
         'SELECT key, value FROM user.settings',
@@ -76,15 +81,23 @@ export class SettingsService {
           // Ignore a damaged value and keep the default.
         }
       }
-      this.state.set({ ...DEFAULT_SETTINGS, ...saved });
+      this.state.update((current) => {
+        const next = { ...DEFAULT_SETTINGS, ...saved } as Settings;
+        for (const key of this.changedDuringLoad) {
+          (next as unknown as Record<string, unknown>)[key] = current[key];
+        }
+        return next;
+      });
     } catch {
       // The database couldn't open; the app shows why. Keep the defaults.
     } finally {
+      this.loading = false;
       this.loaded.set(true);
     }
   }
 
   async set<K extends keyof Settings>(key: K, value: Settings[K]): Promise<void> {
+    if (this.loading) this.changedDuringLoad.add(key);
     this.state.update((s) => ({ ...s, [key]: value }));
     await this.db.exec(
       `INSERT INTO user.settings (key, value) VALUES (?, ?)
