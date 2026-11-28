@@ -22,7 +22,10 @@ test('a lesson shows content from content.db, with reading and script switches',
   // 404.html fallback, which logs a 404 (tested separately below).
   await page.goto('./');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('賢文');
-  await page.getByRole('link', { name: /課文/ }).first().click();
+  await page
+    .getByRole('link', { name: /課文|Lessons/ })
+    .first()
+    .click();
   await page.locator('[data-lesson="1"]').click();
   const first = card(page, 'zgxw-001');
   await expect(first).toContainText('昔');
@@ -99,7 +102,10 @@ test('bookmarks and notes are kept, and listed under Saved', async ({ page, brow
   );
   await expect(card(page, 'zgxw-002').locator('.note')).toContainText('以史為鏡');
 
-  await page.getByRole('link', { name: /收藏/ }).first().click();
+  await page
+    .getByRole('link', { name: /收藏|Saved/ })
+    .first()
+    .click();
   await expect(page).toHaveURL(/saved$/);
   await expect(card(page, 'zgxw-002')).toBeVisible();
 });
@@ -194,9 +200,18 @@ test('review: two reviewers’ verdicts combine, and the owner’s ✓ is requir
     ['zgxw-001', /OK/],
     ['zgxw-002', /Change/, '鑑 should be gaam3 in the notes too'],
   ]);
-  await page.reload();
+  // A comment typed just before switching apps is kept, without leaving the box.
+  const box = page.locator('[data-review="zgxw-002"]').getByRole('textbox');
+  await box.fill('鑑 should be gaam3 in the notes too, and in 鑑古');
+  await page.evaluate(() => {
+    Object.defineProperty(document, 'visibilityState', { value: 'hidden', configurable: true });
+    document.dispatchEvent(new Event('visibilitychange'));
+  });
+  await expect(box).not.toBeFocused();
+  // Coming back to /review opens the lesson with work left (lesson 1 here).
+  await page.goto('./review');
   await expect(page.locator('[data-review="zgxw-002"]').getByRole('textbox')).toHaveValue(
-    '鑑 should be gaam3 in the notes too',
+    '鑑 should be gaam3 in the notes too, and in 鑑古',
   );
 
   // Other reviewers, each on their own device.
@@ -291,7 +306,10 @@ test('export, import and the calendar reminder download files', async ({ page })
   expect(json.format).toBe('worthy-words-backup');
   expect(json.bookmarks.map((b: { proverb_id: string }) => b.proverb_id)).toContain('zgxw-010');
 
-  await page.getByRole('link', { name: /收藏/ }).first().click();
+  await page
+    .getByRole('link', { name: /收藏|Saved/ })
+    .first()
+    .click();
   await expect(card(page, 'zgxw-010')).toBeVisible();
 });
 
@@ -335,7 +353,10 @@ test('works offline once loaded', async ({ page, context }) => {
   await page.reload();
   await expect(page.locator('app-proverb-card')).toHaveCount(4);
   // Pages not visited yet are cached too.
-  await page.getByRole('link', { name: /主題/ }).first().click();
+  await page
+    .getByRole('link', { name: /主題|Themes/ })
+    .first()
+    .click();
   await expect(page.locator('[data-theme]')).toHaveCount(4);
 });
 

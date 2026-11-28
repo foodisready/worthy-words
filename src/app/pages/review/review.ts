@@ -54,6 +54,12 @@ function columns(p: Proverb): Item['columns'] {
 @Component({
   selector: 'app-review',
   imports: [RouterLink],
+  // A comment saves when its box loses focus. Switching apps or closing the tab
+  // on a phone doesn't always do that, so leave the box when the page is hidden.
+  host: {
+    '(document:visibilitychange)': 'saveOpenComment()',
+    '(window:pagehide)': 'saveOpenComment()',
+  },
   templateUrl: './review.html',
   styleUrl: './review.scss',
 })
@@ -175,6 +181,11 @@ export class ReviewPage {
     if (!item.review) return;
     if (comment.trim() === item.review.comment) return;
     await this.reviews.save(item.proverb.id, item.review.verdict, comment.trim(), item.fingerprint);
+  }
+
+  protected saveOpenComment() {
+    const box = document.activeElement;
+    if (box instanceof HTMLTextAreaElement) box.blur();
   }
 
   protected openComment(item: Item) {
